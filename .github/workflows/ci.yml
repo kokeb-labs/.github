@@ -1,0 +1,88 @@
+# Checks for this repository: Markdown, YAML, JSON, the org and brand scripts, and DCO sign-off on pull requests.
+# Self-contained on purpose: every other repository's CI depends on this one and on ci-tools, so this one depends on
+# neither.
+name: CI gate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+      - name: Markdown
+        run: npx --yes markdownlint-cli2@0.18.1 "**/*.md" "#node_modules" "#brand/out"
+      - name: YAML
+        run: |
+          python -m pip install --quiet yamllint==1.37.1
+          yamllint -d '{extends: default, rules: {line-length: {max: 120}, document-start: disable, truthy: {check-keys: false}}}' .github
+      - name: JSON
+        run: for f in org/*.json org/rulesets/*.json; do python -m json.tool "$f" >/dev/null || exit 1; done
+      - name: Python
+        run: python -m py_compile org/kokeb_org.py brand/generate.py
+      - name: Brand assets generate
+        run: python brand/generate.py
+
+  dco:
+    name: DCO
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Every commit is signed off by its author
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          bad=0
+          for c in $(git rev-list --no-merges "$BASE..$HEAD"); do
+            author="$(git log -1 --format='%an <%ae>' "$c")"
+            if ! git log -1 --format='%B' "$c" | grep -qiF "Signed-off-by: $author"; then
+              echo "::error::$(git log -1 --format='%h %s' "$c") has no 'Signed-off-by: $author'"
+              bad=1
+            fi
+          done
+          if [ "$bad" -ne 0 ]; then
+            echo "Fix with: git rebase --signoff $BASE && git push --force-with-lease"
+          fi
+          exit "$bad"
+
+  gate:
+    name: gate
+    if: always()
+    needs: [lint, dco]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: All required jobs passed or were skipped
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          for r in $RESULTS; do
+            case "$r" in success|skipped) ;; *) echo "::error::a job ended with $r"; exit 1 ;; esac
+          done

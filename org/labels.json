@@ -1,0 +1,18 @@
+[
+  {"name": "bug", "color": "d73a4a", "description": "Something behaves wrong"},
+  {"name": "enhancement", "color": "a2eeef", "description": "New capability or API change"},
+  {"name": "driver-request", "color": "5319e7", "description": "A new chip driver"},
+  {"name": "safety", "color": "b60205", "description": "Can damage hardware or cause unsafe motion, heat or pressure; fixed first"},
+  {"name": "security", "color": "ee0701", "description": "Hardening; vulnerabilities go through a private advisory instead"},
+  {"name": "breaking", "color": "e99695", "description": "Changes a public API, a config layout or stored data; needs a Breaking changelog entry"},
+  {"name": "standard", "color": "0e8a16", "description": "Brings the repository in line with the engineering standard"},
+  {"name": "documentation", "color": "0075ca", "description": "Docs only"},
+  {"name": "ci", "color": "fbca04", "description": "Workflows and tooling"},
+  {"name": "dependencies", "color": "0366d6", "description": "Dependency and action updates"},
+  {"name": "hardware-verified", "color": "1d7644", "description": "Run on real hardware; the PR says which board"},
+  {"name": "needs-hardware", "color": "c5def5", "description": "Needs a run on real hardware before release"},
+  {"name": "good first issue", "color": "7057ff", "description": "Small and well described"},
+  {"name": "help wanted", "color": "008672", "description": "Maintainers would welcome a pull request"},
+  {"name": "question", "color": "d876e3", "description": "Better asked in Discussions"},
+  {"name": "wontfix", "color": "ffffff", "description": "Not planned"}
+]

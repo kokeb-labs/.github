@@ -1,0 +1,50 @@
+name: Driver request
+description: Ask for a driver for a chip we don't support yet.
+labels: ["driver-request"]
+body:
+  - type: input
+    id: part
+    attributes:
+      label: Part number
+      placeholder: TMP117
+    validations:
+      required: true
+  - type: input
+    id: vendor
+    attributes:
+      label: Vendor
+    validations:
+      required: true
+  - type: dropdown
+    id: bus
+    attributes:
+      label: Bus
+      options:
+        - SPI
+        - I2C
+        - UART
+        - Analog (ADC)
+        - CAN
+        - GPIO only
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: datasheet
+    attributes:
+      label: Datasheet link
+      description: A link to the vendor's page. Please don't attach the PDF.
+    validations:
+      required: true
+  - type: textarea
+    id: use
+    attributes:
+      label: What you need from it
+      description: The features you'd use first (for example "read temperature at 1 Hz, alert pin").
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Contribution
+      options:
+        - label: I can write it from driver-template, with review
+        - label: I can test it on hardware
