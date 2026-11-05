@@ -51,7 +51,7 @@ left alone.
 | `main-integrity` | default branch | no deletion, no force-push, linear history, signed commits | none |
 | `main-review` | default branch | changes only through a pull request, conversations resolved, squash only; reviews per the review mode below | none in solo mode; owners through a pull request in team mode |
 | `main-checks` | default branch | the required checks pass (default `CI gate / gate`), reported by GitHub Actions only | none |
-| `release-tags` | `v*.*.*` tags | only owners and release workflows create them; nobody moves or deletes them | owners and GitHub Actions |
+| `release-tags` | `v*.*.*` tags | once created, nobody moves or deletes them | owners, to fix a mistake |
 
 Notes:
 
@@ -59,8 +59,9 @@ Notes:
   need your own signing key, and those are blocked anyway.
 - **Required checks are pinned to GitHub Actions** (app ID 15368), so no other app or token can report a fake
   green `CI gate / gate`.
-- **Release workflows** run as GitHub Actions, which may create `v*.*.*` tags, so `ci-tools` can cut its own patch
-  releases. Workflows from forks get a read-only token and can't.
+- **Creating** a `v*.*.*` tag needs write access, which today means owners and release workflows (`ci-tools` cuts
+  its own patch releases). GitHub doesn't let GitHub Actions bypass a ruleset, so creation isn't restricted
+  further. Workflows from forks get a read-only token and can't create tags.
 - **Moving major tags** such as `v1` in `ci-tools` don't match `v*.*.*`, so its release workflow can still move them.
 - **GitHub Free** enforces rulesets on public repositories only, and has no organization-wide rulesets. The script
   applies a copy to each public repository and says which private ones it can't protect. On a paid plan these
