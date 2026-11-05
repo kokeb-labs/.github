@@ -1,1 +1,3 @@
 brand/out/
+__pycache__/
+*.pyc
