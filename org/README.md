@@ -10,6 +10,7 @@ drift shows up in a dry run.
 | [`repos.json`](repos.json) | One entry per repository: kind, description, topics, homepage, per-repository overrides |
 | [`labels.json`](labels.json) | The label set |
 | [`rulesets/`](rulesets) | Branch and tag rulesets |
+| [`actions-allowlist.json`](actions-allowlist.json) | The organisation's Actions policy: which third-party actions may run, and SHA pinning |
 | [`ORG-SETTINGS.md`](ORG-SETTINGS.md) | Organization-level settings, set once by an owner in the GitHub UI |
 
 ## Running it
@@ -21,6 +22,7 @@ python3 org/kokeb_org.py                       # plan: what would change (writes
 python3 org/kokeb_org.py --apply               # write the changes
 python3 org/kokeb_org.py --repo driver-tmp117  # one repository (repeatable)
 python3 org/kokeb_org.py --section rulesets    # one section: settings, security, actions, rulesets, labels
+python3 org/kokeb_org.py --section actions     # also the organisation's allow-list (when no --repo is given)
 python3 org/kokeb_org.py --check               # exit 1 on any drift, for a scheduled CI job
 ```
 
@@ -33,6 +35,32 @@ left alone.
 2. Add its entry to `repos.json` in a pull request. A repository whose CI gate doesn't exist yet gets
    `"required_checks": []` until it does.
 3. After the merge, an owner runs `python3 org/kokeb_org.py --repo <name> --apply`.
+
+## Trying out a new action
+
+Actions in `kokeb-labs` may only come from GitHub, from `kokeb-labs` itself, or from the third-party actions in
+[`actions-allowlist.json`](actions-allowlist.json), and every one must be pinned to a full commit SHA. That stops a
+compromised or retagged action from running with our tokens. It doesn't stop you from building CI:
+
+| You want to | Do this |
+| --- | --- |
+| Write a new action or reusable workflow | Put it in a `kokeb-labs` repository; it is allowed at once. In the same repository call it as `uses: ./path/to/action`; from another repository pin a commit, `uses: kokeb-labs/<repo>/<path>@<full SHA>` |
+| Try a change to a `ci-tools` reusable workflow | Call it from a branch while you test: `uses: kokeb-labs/ci-tools/.github/workflows/<file>.yml@<your-branch>`, then go back to `@v1` once it is released. SHA pinning applies to actions, not to reusable workflows |
+| Try a third-party action | Try it first in a repository under your own account, where the organisation's policy doesn't apply. Then open a pull request here that adds it to `actions-allowlist.json` |
+| Run a tool that has no action you trust | Install it in a `run:` step from its own release and check a pinned SHA-256, as `ru-docs-publish` does for Doxygen |
+
+A pull request that adds an action answers, in the entry's fields and the description:
+
+1. **Who maintains it?** An organisation or a well-known maintainer, with recent commits and releases.
+2. **Is the SHA a real release?** The commit must be on a release tag of that repository, not a commit that exists
+   only in a fork (a fork's commit can be reached by the same name and SHA).
+3. **What does it run?** Read `action.yml`. A composite action can call other actions: each of them needs an entry
+   too. Prefer a `run:` step when the action is only a thin wrapper.
+4. **What can it touch?** The permissions of the job that uses it, and any secret passed to it. Write access needs
+   a reason.
+5. **Who keeps it current?** Dependabot updates the SHA and its `# vX.Y.Z` comment weekly in `ci-tools`.
+
+After the merge an owner runs `python3 org/kokeb_org.py --section actions --apply`.
 
 ## What every repository gets
 
