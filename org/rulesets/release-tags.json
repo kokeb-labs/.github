@@ -12,9 +12,6 @@
   },
   "rules": [
     {
-      "type": "creation"
-    },
-    {
       "type": "update"
     },
     {
@@ -25,11 +22,6 @@
     {
       "actor_id": 1,
       "actor_type": "OrganizationAdmin",
-      "bypass_mode": "always"
-    },
-    {
-      "actor_id": 15368,
-      "actor_type": "Integration",
       "bypass_mode": "always"
     }
   ]
