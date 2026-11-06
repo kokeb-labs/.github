@@ -26,7 +26,7 @@
         "embedded",
         "cpp"
       ],
-      "homepage": ""
+      "homepage": "https://kokeb-labs.github.io/ci-tools/"
     },
     "espidf-tools": {
       "kind": "tooling",
@@ -38,7 +38,7 @@
         "tooling",
         "embedded"
       ],
-      "homepage": ""
+      "homepage": "https://kokeb-labs.github.io/espidf-tools/"
     },
     "driver-template": {
       "kind": "template",
@@ -53,6 +53,16 @@
         "hardware-agnostic"
       ],
       "homepage": ""
+    },
+    "kokeb-labs.github.io": {
+      "kind": "docs",
+      "description": "The Kokeb Labs portal: projects, how we build, roadmap and contributing.",
+      "topics": [
+        "kokeb-labs",
+        "documentation",
+        "mkdocs"
+      ],
+      "homepage": "https://kokeb-labs.github.io/"
     }
   }
 }
