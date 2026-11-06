@@ -69,6 +69,9 @@ Notes:
 
 ## Review mode
 
+Both review modes turn off GitHub's *extra approval for unattributed changes*. In solo mode nobody else could
+give that approval, and in team mode the code-owner review already covers it.
+
 `policy.json` has `"review_mode": "solo"` while one person maintains the organization. A pull request is still
 required, so CI runs and history stays clean, but no approval is needed, since GitHub doesn't let you approve your
 own pull request.
