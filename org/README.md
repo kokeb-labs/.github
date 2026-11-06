@@ -79,8 +79,8 @@ After the merge an owner runs `python3 org/kokeb_org.py --section actions --appl
 | `main-integrity` | default branch | no deletion, no force-push, linear history, signed commits | none |
 | `main-review` | default branch | changes only through a pull request, conversations resolved, squash only; reviews per the review mode below | none in solo mode; owners through a pull request in team mode |
 | `main-checks` | default branch | the required checks pass (default `CI gate / gate`), reported by GitHub Actions only | none |
-| `release-tags` | `v*.*.*` tags | only a release workflow (or an owner) creates them; once created, nobody moves or deletes them | owners, to fix a mistake; GitHub Actions, to create the release tag |
-| `major-tags` | `v1`, `v2`, … `v99` | only a release workflow (or an owner) moves the major tag every caller pins to; nobody deletes it | owners; GitHub Actions, to move the tag after a release |
+| `release-tags` | `v*.*.*` tags | once created, nobody moves or deletes them | owners, to fix a mistake |
+| `major-tags` | `v1`, `v2`, … `v99` | nobody deletes the major tag every caller pins to (the release workflow moves it, so moving stays open until releases run as an org GitHub App that a ruleset can exempt) | owners |
 
 Notes:
 
