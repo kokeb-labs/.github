@@ -10,13 +10,18 @@ host, and templates that get a new driver or board from zero to tested in minute
 
 *Kokeb (ኮከብ) means "star" in Amharic.*
 
+Each arrow is a call, from your product down to the chip:
+
 ```mermaid
-flowchart LR
-  drv["Chip drivers<br/>driver-&lt;chip&gt;"] --> core["kb-core<br/>interfaces · rtos · utils · handlers"]
-  core --> hal["kb-hal-common<br/>board HAL framework"]
-  hal --> board["Your board HAL<br/>and product"]
+flowchart TD
+  board["Your board and product"] -- calls --> hal["kb-hal-common<br/>board HAL framework"]
+  hal -- calls --> core["kb-core<br/>handlers · interfaces · rtos · utils"]
+  core -- calls --> drv["Chip drivers<br/>driver-&lt;chip&gt;"]
+  drv -- "through an MCU port" --> chip["The chip"]
   tpl["driver-template"] -. starts .-> drv
 ```
+
+Start at the portal: **<https://kokeb-labs.github.io/>**.
 
 ## What is here
 
