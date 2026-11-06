@@ -177,7 +177,7 @@ class Run:
     # -- rulesets ----------------------------------------------------------------------------------------------
     def wanted_rulesets(self, entry: dict, policy: dict) -> list[dict]:
         sets = []
-        for name in ("main-integrity", f"main-review.{policy['review_mode']}", "release-tags"):
+        for name in ("main-integrity", f"main-review.{policy['review_mode']}", "release-tags", "major-tags"):
             sets.append(json.loads((HERE / "rulesets" / f"{name}.json").read_text()))
         checks = entry.get("required_checks", policy["default_required_checks"])
         if checks:
