@@ -49,8 +49,8 @@ The organization is only as safe as its owner accounts.
 
 | Setting | Value |
 | --- | --- |
-| Policies | Allow `kokeb-labs` actions and reusable workflows, plus selected non-`kokeb-labs` actions: GitHub-owned actions, and the third-party actions `ci-tools` uses: `DavidAnson/markdownlint-cli2-action`, `cpp-linter/cpp-linter-action`, `dawidd6/action-download-artifact`, `espressif/esp-idf-ci-action`, `lycheeverse/lychee-action`, `peaceiris/actions-gh-pages`, `ruby/setup-ruby`, `softprops/action-gh-release`, `ssciwr/doxygen-install`, `tlylt/install-graphviz` |
-| Require actions to be pinned to a full commit SHA | On |
+| Policies | Allow `kokeb-labs` actions and reusable workflows, GitHub-owned actions, and the third-party actions in [`actions-allowlist.json`](actions-allowlist.json). `kokeb_org.py --section actions --apply` sets it |
+| Require actions to be pinned to a full commit SHA | On (also set from `actions-allowlist.json`) |
 | Fork pull request workflows from outside collaborators | Require approval for all outside collaborators |
 | Workflow permissions | Read repository contents only; don't allow GitHub Actions to create or approve pull requests |
 | Runners | GitHub-hosted only; no self-hosted runners on public repositories |

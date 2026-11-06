@@ -6,6 +6,7 @@ Desired state lives next to this file:
   repos.json       one entry per repository: kind, description, topics, homepage, overrides
   labels.json      the label set
   rulesets/*.json  the rulesets (main-review.<mode>.json picks the review mode)
+  actions-allowlist.json  the organisation's Actions policy: allowed third-party actions, SHA pinning
 
 Default is a dry run that prints what would change. --apply writes it. --check exits 1 on any drift (for CI).
 Re-running is safe: everything is compared first and only differences are written. Labels and rulesets that are
@@ -138,6 +139,27 @@ class Run:
             except RuntimeError as err:  # no supported language yet (for example a docs-only repository)
                 print(f"  security  code scanning not enabled: {err}")
 
+    # -- organisation Actions policy ---------------------------------------------------------------------------
+    def org_actions(self, allow: dict) -> None:
+        """The org-wide allow-list and SHA pinning, from actions-allowlist.json (patterns compared as a set)."""
+        base = f"orgs/{self.org}/actions/permissions"
+        want_perm = {"enabled_repositories": "all", "allowed_actions": "selected",
+                     "sha_pinning_required": allow["sha_pinning_required"]}
+        have_perm = self.gh.call(base) or {}
+        if subset_differs(want_perm, have_perm):
+            self.change(self.org, "actions", f"set {want_perm}")
+            self.gh.write(base, "PUT", want_perm)
+        patterns = [allow["own_org"]] + [f"{a['action']}@*" for a in allow["actions"]]
+        want_sel = {"github_owned_allowed": allow["github_owned_allowed"], "verified_allowed": allow["verified_allowed"],
+                    "patterns_allowed": sorted(patterns)}
+        have_sel = self.gh.call(f"{base}/selected-actions") or {}
+        have_sel = {**have_sel, "patterns_allowed": sorted(have_sel.get("patterns_allowed", []))}
+        if subset_differs(want_sel, have_sel):
+            added = sorted(set(patterns) - set(have_sel["patterns_allowed"]))
+            removed = sorted(set(have_sel["patterns_allowed"]) - set(patterns))
+            self.change(self.org, "actions", f"set the allow-list (add {added or 'none'}, remove {removed or 'none'})")
+            self.gh.write(f"{base}/selected-actions", "PUT", want_sel)
+
     # -- actions -----------------------------------------------------------------------------------------------
     def actions(self, repo: str, info: dict, policy: dict) -> None:
         want = policy["actions_workflow_permissions"]
@@ -225,6 +247,10 @@ def main() -> int:
         print(f"declared but not on GitHub yet: {name}")
     print(f"{'Applying' if args.apply else 'Plan for'} {org}: review mode {policy['review_mode']}, "
           f"sections {', '.join(sections)}\n")
+
+    if "actions" in sections and not args.repo:
+        print(f"{org} (organisation)")
+        run.org_actions(load("actions-allowlist.json"))
 
     for repo in targets:
         if repo not in live:
