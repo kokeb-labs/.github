@@ -81,7 +81,7 @@ has them, a maintainer does each step by hand and checks the same conditions.
 | Workflow | Does |
 | --- | --- |
 | `prepare-release` (manual, input `version`) | Normalises changelog headings, rolls `## [Unreleased]` into `## [X.Y.Z] - <date>`, bumps every version declaration (build settings, `driver.yml`, hand-written headers), and opens a `Release vX.Y.Z` PR. Merging it tags the merge commit. |
-| `release.yml` (on a `v*` tag) | Fails if the tag does not match the declared version or the commit is not on `main` / `release/*`; creates the GitHub Release with the changelog section as the body; for products, attaches `.bin`, `.elf`, `sha256` and `sdkconfig` and fails if any is missing. |
+| `release.yml` (on a `v*` tag) | Fails if the tag does not match the declared version or the commit is not on `main` / `release/*`; creates the GitHub Release with the changelog section as the body; every release attaches a byte-stable source archive, an SPDX 2.3 SBOM and `SHA256SUMS` (ci-tools `ru-release` and `ru-release-with-artifacts`, from 1.7.0); drivers and libraries also attach one zip per example firmware build; for products, attaches `.bin`, `.elf`, `sha256` and `sdkconfig` and fails if any is missing. |
 | Docs publish (on a `v*` tag) | Publishes the versioned docs with `kokeb-docs`. A `-rc` tag publishes without moving the `latest` alias. |
 | Pin check | Checks each submodule against a release tag and the manifest or `catalog/compat.yml`: warns on PRs to `main`, fails on `release/*` and tag pushes, and checks the tagged commit is on `main`. |
 | Bump bot | Opens a pin-bump PR in kb-core when a pinned driver tags a release. |
