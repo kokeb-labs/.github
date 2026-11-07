@@ -54,8 +54,8 @@ From confirmation to a tagged release with the fix:
 
 Severity is raised by one step, up to critical, when the flaw can change what a motor, actuator or other physical
 output does, or can defeat a safety function. Those flaws are also recorded as problem reports under the handbook's
-problem resolution process (IEC 62304 clause 9). If we expect to miss a target we tell you why and give a new date before the target
-passes.
+problem resolution process (IEC 62304 clause 9). If we expect to miss a target, we tell you why and give a new date
+before the target passes.
 
 ### Coordinated disclosure
 
