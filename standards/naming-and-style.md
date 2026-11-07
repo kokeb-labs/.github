@@ -98,9 +98,9 @@ Markdown wraps at 120 columns (markdownlint `MD013`, tables and code blocks exem
 
 ## Static analysis
 
-[`config/.clang-tidy`](config/.clang-tidy) enables `bugprone-*`, `clang-analyzer-*`, `cppcoreguidelines-*`,
-`modernize-*`, `performance-*`, `portability-*` and `readability-*`, turns off the checks that fight register-level
-code (each with its reason in the file), and sets the naming rules above.
+[`config/.clang-tidy`](config/.clang-tidy) enables `bugprone-*`, `cert-*`, `clang-analyzer-*`,
+`cppcoreguidelines-*`, `modernize-*`, `performance-*`, `portability-*` and `readability-*`, turns off the checks
+that fight register-level code (each with its reason in the file), and sets the naming rules above.
 
 ## Using the configs in a repository
 
