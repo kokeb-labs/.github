@@ -2,7 +2,7 @@
 
 ## Reporting a vulnerability
 
-Email **SECURITY_ADDRESS** or report through a GitHub security advisory. Either way, report privately.
+Email [nebstadesse811@gmail.com](mailto:nebstadesse811@gmail.com) or report through a GitHub security advisory. Either way, report privately.
 
 GitHub's private reporting works only on public repositories. For a private repository, or if the advisory form is
 not offered, use the email. Put the same details in it as you would in the form below.
