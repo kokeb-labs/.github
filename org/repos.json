@@ -140,6 +140,23 @@
       ],
       "homepage": ""
     },
+    "driver-tle92466ed": {
+      "kind": "driver",
+      "description": "C++20 driver for the Infineon TLE92466ED six-channel low-side solenoid driver (SPI)",
+      "topics": [
+        "kokeb-labs",
+        "driver",
+        "embedded",
+        "cpp20",
+        "misra-cpp",
+        "header-only",
+        "spi",
+        "solenoid-driver",
+        "infineon",
+        "tle92466ed"
+      ],
+      "homepage": ""
+    },
     "kokeb-labs.github.io": {
       "kind": "docs",
       "description": "The Kokeb Labs portal: projects, how we build, roadmap and contributing.",
