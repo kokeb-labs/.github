@@ -99,8 +99,11 @@ Markdown wraps at 120 columns (markdownlint `MD013`, tables and code blocks exem
 ## Static analysis
 
 [`config/.clang-tidy`](config/.clang-tidy) enables `bugprone-*`, `cert-*`, `clang-analyzer-*`,
-`cppcoreguidelines-*`, `modernize-*`, `performance-*`, `portability-*` and `readability-*`, turns off the checks
-that fight register-level code (each with its reason in the file), and sets the naming rules above.
+`cppcoreguidelines-*`, `modernize-*`, `performance-*`, `portability-*` and `readability-*`, adds the cheap checks
+the handbook's MISRA C++:2023 matrix relies on (`hicpp-signed-bitwise`, `misc-no-recursion` and others), watches
+`std::span` with `bugprone-dangling-handle`, turns off the checks that fight register-level code or would suggest
+what the handbook's C++20 profile forbids (each with its reason in the file), and sets the naming rules above. It
+is the standard and high level; the safety level adds the handbook's generated `config/.clang-tidy-safety`.
 
 ## Using the configs in a repository
 
