@@ -50,7 +50,93 @@
         "embedded",
         "cpp",
         "cpp20",
-        "hardware-agnostic"
+        "hardware-agnostic",
+        "misra-cpp"
+      ],
+      "homepage": ""
+    },
+    "driver-ads7952": {
+      "kind": "driver",
+      "description": "C++20 driver for the TI ADS7950/51/52/53 12-bit 4/8/12/16-channel SPI ADCs",
+      "topics": [
+        "kokeb-labs",
+        "driver",
+        "embedded",
+        "cpp20",
+        "misra-cpp",
+        "header-only",
+        "spi",
+        "adc",
+        "texas-instruments",
+        "ads7952"
+      ],
+      "homepage": ""
+    },
+    "driver-as5047u": {
+      "kind": "driver",
+      "description": "C++20 driver for the ams OSRAM AS5047U 14-bit magnetic rotary position sensor (SPI)",
+      "topics": [
+        "kokeb-labs",
+        "driver",
+        "embedded",
+        "cpp20",
+        "misra-cpp",
+        "header-only",
+        "spi",
+        "magnetic-encoder",
+        "ams-osram",
+        "as5047u"
+      ],
+      "homepage": ""
+    },
+    "driver-at25040b": {
+      "kind": "driver",
+      "description": "C++20 driver for the Microchip AT25010B/020B/040B SPI serial EEPROMs",
+      "topics": [
+        "kokeb-labs",
+        "driver",
+        "embedded",
+        "cpp20",
+        "misra-cpp",
+        "header-only",
+        "spi",
+        "eeprom",
+        "microchip",
+        "at25040b"
+      ],
+      "homepage": ""
+    },
+    "driver-max22200": {
+      "kind": "driver",
+      "description": "C++20 driver for the Analog Devices MAX22200 octal solenoid and motor driver (SPI)",
+      "topics": [
+        "kokeb-labs",
+        "driver",
+        "embedded",
+        "cpp20",
+        "misra-cpp",
+        "header-only",
+        "spi",
+        "solenoid-driver",
+        "analog-devices",
+        "max22200"
+      ],
+      "homepage": ""
+    },
+    "driver-pcal9555": {
+      "kind": "driver",
+      "description": "C++20 driver for the NXP PCA9555 and PCAL9555A 16-bit I2C GPIO expanders",
+      "topics": [
+        "kokeb-labs",
+        "driver",
+        "embedded",
+        "cpp20",
+        "misra-cpp",
+        "header-only",
+        "i2c",
+        "gpio-expander",
+        "nxp",
+        "pcal9555"
       ],
       "homepage": ""
     },
