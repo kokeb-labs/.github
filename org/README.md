@@ -1,45 +1,68 @@
 # Settings as code
 
-Every repository in `kokeb-labs` gets the same settings, security features, Actions policy, rulesets and labels.
-They are declared here and applied by one script, so a new repository is set up the same way as the first one and
-drift shows up in a dry run.
+Kokeb Labs runs two GitHub organizations: `kokeb-labs` (the template, CI, docs and everything shared) and
+`kokeb-labs-drivers` (the chip drivers). Both organizations, and every repository in them, get the same
+organization settings, repository settings, security features, Actions policy, rulesets and labels. They are
+declared here and applied by one script, so a new repository is set up the same way as the first one and drift
+shows up in a dry run. The drivers' organization keeps no settings of its own: they all live here.
 
 | File | Declares |
 | --- | --- |
-| [`policy.json`](policy.json) | Settings shared by every repository, the review mode, the default required check, the Actions token policy |
-| [`repos.json`](repos.json) | One entry per repository: kind, description, topics, homepage, per-repository overrides |
+| [`policy.json`](policy.json) | Settings shared by every organization and repository: member privileges, the default code security configuration, repository settings, the review mode, the default required check, the Actions token policy |
+| [`repos.json`](repos.json) | One entry per organization under `orgs`: its profile (name, description, URL), the Actions patterns it allows besides its own repositories, and one entry per repository (kind, description, topics, homepage, per-repository overrides) |
 | [`labels.json`](labels.json) | The label set |
 | [`rulesets/`](rulesets) | Branch and tag rulesets |
-| [`actions-allowlist.json`](actions-allowlist.json) | The organisation's Actions policy: which third-party actions may run, and SHA pinning |
-| [`ORG-SETTINGS.md`](ORG-SETTINGS.md) | Organization-level settings, set once by an owner in the GitHub UI |
+| [`actions-allowlist.json`](actions-allowlist.json) | The Actions policy of both organizations: which third-party actions may run, and SHA pinning |
+| [`ORG-SETTINGS.md`](ORG-SETTINGS.md) | Organization-level settings the API can't set, done once by an owner in the GitHub UI |
 
 ## Running it
 
 Requires `gh` authenticated as an organization owner, and Python 3.9 or newer.
 
 ```bash
-python3 org/kokeb_org.py                       # plan: what would change (writes nothing)
-python3 org/kokeb_org.py --apply               # write the changes
-python3 org/kokeb_org.py --repo driver-tmp117  # one repository (repeatable)
-python3 org/kokeb_org.py --section rulesets    # one section: settings, security, actions, rulesets, labels
-python3 org/kokeb_org.py --section actions     # also the organisation's allow-list (when no --repo is given)
-python3 org/kokeb_org.py --check               # exit 1 on any drift, for a scheduled CI job
+python3 org/kokeb_org.py                            # plan for every organization (writes nothing)
+python3 org/kokeb_org.py --apply                    # write the changes
+python3 org/kokeb_org.py --org kokeb-labs-drivers   # one organization (repeatable)
+python3 org/kokeb_org.py --repo driver-tmp117       # one repository, in whichever organization holds it
+python3 org/kokeb_org.py --section rulesets         # one section: settings, security, actions, rulesets, labels
+python3 org/kokeb_org.py --check                    # exit 1 on any drift in any organization, for a scheduled job
 ```
 
 It compares before it writes, so re-running is safe. Labels and rulesets that aren't declared here are reported and
-left alone.
+left alone. Each organization ends with its own count, and the last line is the total; `--check` exits 1 when the
+total isn't 0.
+
+Without `--repo`, each section also covers the organization itself:
+
+| Section | Organization-level part |
+| --- | --- |
+| `settings` | Profile (name, description, URL) from `repos.json`; base permission and member privileges from `policy.json` |
+| `security` | The code security configuration new public repositories get (`GitHub recommended`) |
+| `actions` | Allowed actions (`<org>/*`, the organization's `actions_patterns`, GitHub-owned and the allow-list), SHA pinning, the workflow token, approval of fork pull request runs |
+| `rulesets` | A note only: GitHub Free has no organization rulesets, so each public repository gets its own copy |
 
 ## Adding a repository
 
-1. Create it (from `driver-template` for a driver or library).
-2. Add its entry to `repos.json` in a pull request. A repository whose CI gate doesn't exist yet gets
-   `"required_checks": []` until it does.
-3. After the merge, an owner runs `python3 org/kokeb_org.py --repo <name> --apply`.
+1. Create it (from `driver-template` for a driver or library). Chip drivers go in `kokeb-labs-drivers`,
+   everything else in `kokeb-labs`.
+2. Add its entry under its organization in `repos.json`, in a pull request. A repository whose CI gate doesn't
+   exist yet gets `"required_checks": []` until it does.
+3. After the merge, an owner runs `python3 org/kokeb_org.py --org <org> --repo <name> --apply`.
+
+A repository that moves to the other organization moves its entry with it.
+
+## Two organizations, one CI
+
+The drivers call the reusable workflows in `kokeb-labs/ci-tools` and start from `kokeb-labs/driver-template`, which
+are public. `kokeb-labs-drivers` therefore allows `kokeb-labs/*` as well as its own `kokeb-labs-drivers/*`
+(`actions_patterns` in `repos.json`). The actions a reusable workflow uses are checked against the policy of the
+organization that calls it, so both organizations share one allow-list.
 
 ## Trying out a new action
 
-Actions in `kokeb-labs` may only come from GitHub, from `kokeb-labs` itself, or from the third-party actions in
-[`actions-allowlist.json`](actions-allowlist.json), and every one must be pinned to a full commit SHA. That stops a
+Actions in either organization may only come from GitHub, from `kokeb-labs` (and in `kokeb-labs-drivers`, from
+that organization itself), or from the third-party actions in [`actions-allowlist.json`](actions-allowlist.json),
+and every one must be pinned to a full commit SHA. That stops a
 compromised or retagged action from running with our tokens. It doesn't stop you from building CI:
 
 | You want to | Do this |
@@ -70,6 +93,7 @@ After the merge an owner runs `python3 org/kokeb_org.py --section actions --appl
 | Web edits | Sign-off required, so commits made in the browser pass the DCO check |
 | Features | Issues on; wiki and classic projects off; Discussions only on `.github`, which hosts the organization's |
 | Security (public repositories) | Secret scanning, push protection, Dependabot alerts, Dependabot security updates, private vulnerability reporting, CodeQL default setup |
+| Security (private repositories) | Dependabot alerts and security updates; the rest needs a paid plan on private repositories |
 | Actions | Workflow token read-only by default; workflows can't approve pull requests; runs from first-time and outside contributors' forks wait for approval |
 
 ## Rulesets
@@ -92,9 +116,10 @@ Notes:
   its own patch releases). GitHub doesn't let GitHub Actions bypass a ruleset, so creation isn't restricted
   further. Workflows from forks get a read-only token and can't create tags.
 - **Moving major tags** such as `v1` in `ci-tools` don't match `v*.*.*`, so its release workflow can still move them.
-- **GitHub Free** enforces rulesets on public repositories only, and has no organization-wide rulesets. The script
-  applies a copy to each public repository and says which private ones it can't protect. On a paid plan these
-  become one organization ruleset.
+- **GitHub Free** enforces rulesets on public repositories only, and has no organization-wide rulesets; the API
+  refuses to create either. The script applies a copy to each public repository and says which private ones it
+  can't protect. When a private repository is made public, run `--apply` for it straight away to protect it. On a
+  paid plan these become one organization ruleset.
 
 ## Review mode
 

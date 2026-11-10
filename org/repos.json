@@ -1,188 +1,242 @@
 {
-  "_comment": "One entry per repository. kind: meta | tooling | template | driver | core | hal | docs. required_checks overrides policy.default_required_checks; [] means no required check yet.",
-  "repos": {
-    ".github": {
-      "kind": "meta",
-      "description": "Kokeb Labs organization profile, community files, settings as code and the engineering standard.",
-      "topics": [
-        "kokeb-labs",
-        "standards",
-        "community"
-      ],
-      "homepage": "",
-      "discussions": true,
-      "required_checks": [
-        "gate"
-      ]
+  "_comment": "One entry per organization: its profile (the organization page fields), the extra Actions patterns it allows besides its own repositories, and one entry per repository. kind: meta | tooling | template | driver | core | hal | docs. required_checks overrides policy.default_required_checks; [] means no required check yet.",
+  "orgs": {
+    "kokeb-labs": {
+      "profile": {
+        "name": "Kokeb Labs",
+        "description": "Open, brand-free drivers and firmware building blocks for embedded systems.",
+        "blog": "https://kokeb-labs.github.io"
+      },
+      "actions_patterns": [],
+      "repos": {
+        ".github": {
+          "kind": "meta",
+          "description": "Kokeb Labs organization profile, community files, settings as code and the engineering standard.",
+          "topics": [
+            "kokeb-labs",
+            "standards",
+            "community"
+          ],
+          "homepage": "",
+          "discussions": true,
+          "required_checks": [
+            "gate"
+          ]
+        },
+        "ci-tools": {
+          "kind": "tooling",
+          "description": "Reusable GitHub Actions workflows, lint configs and the documentation theme for Kokeb Labs repositories.",
+          "topics": [
+            "kokeb-labs",
+            "ci-tools",
+            "github-actions",
+            "mkdocs",
+            "embedded",
+            "cpp"
+          ],
+          "homepage": "https://kokeb-labs.github.io/ci-tools/"
+        },
+        "espidf-tools": {
+          "kind": "tooling",
+          "description": "Build, flash and setup scripts for ESP-IDF projects and examples.",
+          "topics": [
+            "kokeb-labs",
+            "esp-idf",
+            "esp32",
+            "tooling",
+            "embedded"
+          ],
+          "homepage": "https://kokeb-labs.github.io/espidf-tools/"
+        },
+        "driver-template": {
+          "kind": "template",
+          "description": "Start a new chip driver or library: one command gives code, host tests, an ESP32 example, docs and CI.",
+          "topics": [
+            "kokeb-labs",
+            "template",
+            "driver",
+            "embedded",
+            "cpp",
+            "cpp20",
+            "hardware-agnostic",
+            "misra-cpp"
+          ],
+          "homepage": ""
+        },
+        "kokeb-labs.github.io": {
+          "kind": "docs",
+          "description": "The Kokeb Labs portal: projects, how we build, roadmap and contributing.",
+          "topics": [
+            "kokeb-labs",
+            "documentation",
+            "mkdocs"
+          ],
+          "homepage": "https://kokeb-labs.github.io/"
+        }
+      }
     },
-    "ci-tools": {
-      "kind": "tooling",
-      "description": "Reusable GitHub Actions workflows, lint configs and the documentation theme for Kokeb Labs repositories.",
-      "topics": [
-        "kokeb-labs",
-        "ci-tools",
-        "github-actions",
-        "mkdocs",
-        "embedded",
-        "cpp"
+    "kokeb-labs-drivers": {
+      "profile": {
+        "name": "Kokeb Labs Drivers",
+        "description": "C++20 chip drivers for embedded systems: hardware-agnostic, MISRA-checked, fuzzed and documented.",
+        "blog": "https://kokeb-labs.github.io"
+      },
+      "actions_patterns": [
+        "kokeb-labs/*"
       ],
-      "homepage": "https://kokeb-labs.github.io/ci-tools/"
-    },
-    "espidf-tools": {
-      "kind": "tooling",
-      "description": "Build, flash and setup scripts for ESP-IDF projects and examples.",
-      "topics": [
-        "kokeb-labs",
-        "esp-idf",
-        "esp32",
-        "tooling",
-        "embedded"
-      ],
-      "homepage": "https://kokeb-labs.github.io/espidf-tools/"
-    },
-    "driver-template": {
-      "kind": "template",
-      "description": "Start a new chip driver or library: one command gives code, host tests, an ESP32 example, docs and CI.",
-      "topics": [
-        "kokeb-labs",
-        "template",
-        "driver",
-        "embedded",
-        "cpp",
-        "cpp20",
-        "hardware-agnostic",
-        "misra-cpp"
-      ],
-      "homepage": ""
-    },
-    "driver-ads7952": {
-      "kind": "driver",
-      "description": "C++20 driver for the TI ADS7950/51/52/53 12-bit 4/8/12/16-channel SPI ADCs",
-      "topics": [
-        "kokeb-labs",
-        "driver",
-        "embedded",
-        "cpp20",
-        "misra-cpp",
-        "header-only",
-        "spi",
-        "adc",
-        "texas-instruments",
-        "ads7952"
-      ],
-      "homepage": ""
-    },
-    "driver-as5047u": {
-      "kind": "driver",
-      "description": "C++20 driver for the ams OSRAM AS5047U 14-bit magnetic rotary position sensor (SPI)",
-      "topics": [
-        "kokeb-labs",
-        "driver",
-        "embedded",
-        "cpp20",
-        "misra-cpp",
-        "header-only",
-        "spi",
-        "magnetic-encoder",
-        "ams-osram",
-        "as5047u"
-      ],
-      "homepage": ""
-    },
-    "driver-at25040b": {
-      "kind": "driver",
-      "description": "C++20 driver for the Microchip AT25010B/020B/040B SPI serial EEPROMs",
-      "topics": [
-        "kokeb-labs",
-        "driver",
-        "embedded",
-        "cpp20",
-        "misra-cpp",
-        "header-only",
-        "spi",
-        "eeprom",
-        "microchip",
-        "at25040b"
-      ],
-      "homepage": ""
-    },
-    "driver-max22200": {
-      "kind": "driver",
-      "description": "C++20 driver for the Analog Devices MAX22200 octal solenoid and motor driver (SPI)",
-      "topics": [
-        "kokeb-labs",
-        "driver",
-        "embedded",
-        "cpp20",
-        "misra-cpp",
-        "header-only",
-        "spi",
-        "solenoid-driver",
-        "analog-devices",
-        "max22200"
-      ],
-      "homepage": ""
-    },
-    "driver-pcal9555": {
-      "kind": "driver",
-      "description": "C++20 driver for the NXP PCA9555 and PCAL9555A 16-bit I2C GPIO expanders",
-      "topics": [
-        "kokeb-labs",
-        "driver",
-        "embedded",
-        "cpp20",
-        "misra-cpp",
-        "header-only",
-        "i2c",
-        "gpio-expander",
-        "nxp",
-        "pcal9555"
-      ],
-      "homepage": ""
-    },
-    "driver-tle92466ed": {
-      "kind": "driver",
-      "description": "C++20 driver for the Infineon TLE92466ED six-channel low-side solenoid driver (SPI)",
-      "topics": [
-        "kokeb-labs",
-        "driver",
-        "embedded",
-        "cpp20",
-        "misra-cpp",
-        "header-only",
-        "spi",
-        "solenoid-driver",
-        "infineon",
-        "tle92466ed"
-      ],
-      "homepage": ""
-    },
-    "driver-pca9685": {
-      "kind": "driver",
-      "description": "C++20 driver for the NXP PCA9685 16-channel 12-bit PWM controller (I2C)",
-      "topics": [
-        "kokeb-labs",
-        "driver",
-        "embedded",
-        "cpp20",
-        "misra-cpp",
-        "header-only",
-        "i2c",
-        "pwm-controller",
-        "nxp",
-        "pca9685"
-      ],
-      "homepage": ""
-    },
-    "kokeb-labs.github.io": {
-      "kind": "docs",
-      "description": "The Kokeb Labs portal: projects, how we build, roadmap and contributing.",
-      "topics": [
-        "kokeb-labs",
-        "documentation",
-        "mkdocs"
-      ],
-      "homepage": "https://kokeb-labs.github.io/"
+      "repos": {
+        ".github": {
+          "kind": "meta",
+          "description": "Kokeb Labs Drivers organization profile, community files, issue and pull request templates.",
+          "topics": [
+            "kokeb-labs",
+            "drivers",
+            "community"
+          ],
+          "homepage": "",
+          "discussions": true,
+          "required_checks": [
+            "gate"
+          ]
+        },
+        "driver-ads7952": {
+          "kind": "driver",
+          "description": "C++20 driver for the TI ADS7950/51/52/53 12-bit 4/8/12/16-channel SPI ADCs",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "spi",
+            "adc",
+            "texas-instruments",
+            "ads7952"
+          ],
+          "homepage": ""
+        },
+        "driver-as5047u": {
+          "kind": "driver",
+          "description": "C++20 driver for the ams OSRAM AS5047U 14-bit magnetic rotary position sensor (SPI)",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "spi",
+            "magnetic-encoder",
+            "ams-osram",
+            "as5047u"
+          ],
+          "homepage": ""
+        },
+        "driver-at25040b": {
+          "kind": "driver",
+          "description": "C++20 driver for the Microchip AT25010B/020B/040B SPI serial EEPROMs",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "spi",
+            "eeprom",
+            "microchip",
+            "at25040b"
+          ],
+          "homepage": ""
+        },
+        "driver-bmp581": {
+          "kind": "driver",
+          "description": "C++20 driver for the Bosch BMP581 barometric pressure and temperature sensor (I2C, SPI)",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "i2c",
+            "spi",
+            "pressure-sensor",
+            "bosch",
+            "bmp581"
+          ],
+          "homepage": ""
+        },
+        "driver-max22200": {
+          "kind": "driver",
+          "description": "C++20 driver for the Analog Devices MAX22200 octal solenoid and motor driver (SPI)",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "spi",
+            "solenoid-driver",
+            "analog-devices",
+            "max22200"
+          ],
+          "homepage": ""
+        },
+        "driver-pca9685": {
+          "kind": "driver",
+          "description": "C++20 driver for the NXP PCA9685 16-channel 12-bit PWM controller (I2C)",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "i2c",
+            "pwm-controller",
+            "nxp",
+            "pca9685"
+          ],
+          "homepage": ""
+        },
+        "driver-pcal9555": {
+          "kind": "driver",
+          "description": "C++20 driver for the NXP PCA9555 and PCAL9555A 16-bit I2C GPIO expanders",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "i2c",
+            "gpio-expander",
+            "nxp",
+            "pcal9555"
+          ],
+          "homepage": ""
+        },
+        "driver-tle92466ed": {
+          "kind": "driver",
+          "description": "C++20 driver for the Infineon TLE92466ED six-channel low-side solenoid driver (SPI)",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "spi",
+            "solenoid-driver",
+            "infineon",
+            "tle92466ed"
+          ],
+          "homepage": ""
+        }
+      }
     }
   }
 }

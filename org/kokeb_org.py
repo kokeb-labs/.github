@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
-"""Keep every kokeb-labs repository's settings, security, Actions policy, rulesets and labels as declared here.
+"""Keep the Kokeb Labs organizations and their repositories as declared here: organization profile and member
+privileges, repository settings, security, Actions policy, rulesets and labels.
 
 Desired state lives next to this file:
-  policy.json      settings shared by every repository, review mode, default required checks
-  repos.json       one entry per repository: kind, description, topics, homepage, overrides
+  policy.json      settings shared by every organization and repository, review mode, default required checks
+  repos.json       one entry per organization (profile, extra Actions patterns) with one entry per repository:
+                   kind, description, topics, homepage, overrides
   labels.json      the label set
   rulesets/*.json  the rulesets (main-review.<mode>.json picks the review mode)
-  actions-allowlist.json  the organisation's Actions policy: allowed third-party actions, SHA pinning
+  actions-allowlist.json  both organizations' Actions policy: allowed third-party actions, SHA pinning
 
-Default is a dry run that prints what would change. --apply writes it. --check exits 1 on any drift (for CI).
+Default is a dry run over every organization in repos.json that prints what would change. --apply writes it.
+--check exits 1 on any drift (for CI). --org limits the run to one organization (repeatable).
 Re-running is safe: everything is compared first and only differences are written. Labels and rulesets that are
 not declared here are reported, never deleted.
 
@@ -78,9 +81,10 @@ def subset_differs(want: Any, have: Any) -> bool:
 
 
 class Run:
-    def __init__(self, gh: Gh, org: str) -> None:
+    def __init__(self, gh: Gh, org: str, plan: str = "") -> None:
         self.gh = gh
         self.org = org
+        self.plan = plan
         self.drift = 0
 
     def change(self, repo: str, section: str, what: str) -> None:
@@ -98,6 +102,8 @@ class Run:
         if entry.get("kind") == "template":
             want["is_template"] = True
         want.update(entry.get("settings", {}))
+        if info.get("visibility") != "public" and self.plan == "free" and want.pop("allow_auto_merge", None):
+            print("  settings  note: auto-merge needs a paid plan on private repositories (applied once public)")
         diff = {k: v for k, v in want.items() if info.get(k) != v}
         if diff:
             self.change(repo, "settings", "set " + ", ".join(f"{k}={v!r}" for k, v in diff.items()))
@@ -107,9 +113,20 @@ class Run:
             self.gh.write(f"repos/{self.org}/{repo}/topics", "PUT", {"names": entry["topics"]})
 
     # -- security ----------------------------------------------------------------------------------------------
+    def dependabot(self, repo: str) -> None:
+        if self.gh.call(f"repos/{self.org}/{repo}/vulnerability-alerts", ok_missing=True) is None:
+            self.change(repo, "security", "turn on Dependabot alerts")
+            self.gh.write(f"repos/{self.org}/{repo}/vulnerability-alerts", "PUT")
+        fixes = self.gh.call(f"repos/{self.org}/{repo}/automated-security-fixes", ok_missing=True) or {}
+        if not fixes.get("enabled"):
+            self.change(repo, "security", "turn on Dependabot security updates")
+            self.gh.write(f"repos/{self.org}/{repo}/automated-security-fixes", "PUT")
+
     def security(self, repo: str, info: dict) -> None:
         if info.get("visibility") != "public":
-            print("  security  skipped: private repository (these features need Advanced Security there)")
+            self.dependabot(repo)
+            print("  security  private repository: Dependabot only (secret scanning, private vulnerability "
+                  "reporting and code scanning need a paid plan there)")
             return
         saa = info.get("security_and_analysis") or {}
         want_saa = {}
@@ -119,13 +136,7 @@ class Run:
         if want_saa:
             self.change(repo, "security", "turn on " + ", ".join(want_saa))
             self.gh.write(f"repos/{self.org}/{repo}", "PATCH", {"security_and_analysis": want_saa})
-        if self.gh.call(f"repos/{self.org}/{repo}/vulnerability-alerts", ok_missing=True) is None:
-            self.change(repo, "security", "turn on Dependabot alerts")
-            self.gh.write(f"repos/{self.org}/{repo}/vulnerability-alerts", "PUT")
-        fixes = self.gh.call(f"repos/{self.org}/{repo}/automated-security-fixes", ok_missing=True) or {}
-        if not fixes.get("enabled"):
-            self.change(repo, "security", "turn on Dependabot security updates")
-            self.gh.write(f"repos/{self.org}/{repo}/automated-security-fixes", "PUT")
+        self.dependabot(repo)
         pvr = self.gh.call(f"repos/{self.org}/{repo}/private-vulnerability-reporting", ok_missing=True) or {}
         if not pvr.get("enabled"):
             self.change(repo, "security", "turn on private vulnerability reporting")
@@ -139,9 +150,39 @@ class Run:
             except RuntimeError as err:  # no supported language yet (for example a docs-only repository)
                 print(f"  security  code scanning not enabled: {err}")
 
+    # -- organisation settings ---------------------------------------------------------------------------------
+    def org_settings(self, info: dict, cfg: dict, policy: dict) -> None:
+        """Profile fields from repos.json and member privileges from policy.json."""
+        want = {**policy.get("org_settings", {}), **cfg.get("profile", {})}
+        diff = {k: v for k, v in want.items() if info.get(k) != v}
+        if diff:
+            self.change(self.org, "settings", "set " + ", ".join(f"{k}={v!r}" for k, v in diff.items()))
+            self.gh.write(f"orgs/{self.org}", "PATCH", diff)
+
+    # -- organisation security ---------------------------------------------------------------------------------
+    def org_security(self, policy: dict) -> None:
+        """The code security configuration that new repositories get (GitHub recommended, public ones)."""
+        want = policy.get("code_security_default")
+        if not want:
+            return
+        confs = self.gh.call(f"orgs/{self.org}/code-security/configurations") or []
+        conf = next((c for c in confs if c.get("name") == want["configuration"]), None)
+        if conf is None:
+            print(f"  security  note: no code security configuration named '{want['configuration']}'")
+            return
+        defaults = self.gh.call(f"orgs/{self.org}/code-security/configurations/defaults") or []
+        have = next((d.get("default_for_new_repos") for d in defaults
+                     if (d.get("configuration") or {}).get("id") == conf["id"]), None)
+        if have != want["default_for_new_repos"]:
+            self.change(self.org, "security",
+                        f"make '{conf['name']}' the default for new {want['default_for_new_repos']} repositories")
+            self.gh.write(f"orgs/{self.org}/code-security/configurations/{conf['id']}/defaults", "PUT",
+                          {"default_for_new_repos": want["default_for_new_repos"]})
+
     # -- organisation Actions policy ---------------------------------------------------------------------------
-    def org_actions(self, allow: dict) -> None:
-        """The org-wide allow-list and SHA pinning, from actions-allowlist.json (patterns compared as a set)."""
+    def org_actions(self, allow: dict, extra_patterns: list[str], policy: dict) -> None:
+        """The org-wide allow-list and SHA pinning, from actions-allowlist.json (patterns compared as a set), the
+        default workflow token and the approval of fork pull request runs."""
         base = f"orgs/{self.org}/actions/permissions"
         want_perm = {"enabled_repositories": "all", "allowed_actions": "selected",
                      "sha_pinning_required": allow["sha_pinning_required"]}
@@ -149,16 +190,29 @@ class Run:
         if subset_differs(want_perm, have_perm):
             self.change(self.org, "actions", f"set {want_perm}")
             self.gh.write(base, "PUT", want_perm)
-        patterns = [allow["own_org"]] + [f"{a['action']}@*" for a in allow["actions"]]
+        third_party = [f"{a['action']}@*" for a in allow["actions"]]
+        patterns = list(dict.fromkeys([f"{self.org}/*", *extra_patterns, *third_party]))
         want_sel = {"github_owned_allowed": allow["github_owned_allowed"], "verified_allowed": allow["verified_allowed"],
                     "patterns_allowed": sorted(patterns)}
-        have_sel = self.gh.call(f"{base}/selected-actions") or {}
+        # The allow-list only exists once allowed_actions is "selected" (GitHub answers 409 before that).
+        have_sel = (self.gh.call(f"{base}/selected-actions") if have_perm.get("allowed_actions") == "selected"
+                    else None) or {}
         have_sel = {**have_sel, "patterns_allowed": sorted(have_sel.get("patterns_allowed", []))}
         if subset_differs(want_sel, have_sel):
             added = sorted(set(patterns) - set(have_sel["patterns_allowed"]))
             removed = sorted(set(have_sel["patterns_allowed"]) - set(patterns))
             self.change(self.org, "actions", f"set the allow-list (add {added or 'none'}, remove {removed or 'none'})")
             self.gh.write(f"{base}/selected-actions", "PUT", want_sel)
+        want_wf = policy["actions_workflow_permissions"]
+        if subset_differs(want_wf, self.gh.call(f"{base}/workflow") or {}):
+            self.change(self.org, "actions", f"set workflow token to {want_wf}")
+            self.gh.write(f"{base}/workflow", "PUT", want_wf)
+        if policy.get("fork_pr_approval_policy"):
+            have = self.gh.call(f"{base}/fork-pr-contributor-approval", ok_missing=True)
+            if have is not None and have.get("approval_policy") != policy["fork_pr_approval_policy"]:
+                self.change(self.org, "actions", f"set fork PR approval to {policy['fork_pr_approval_policy']}")
+                self.gh.write(f"{base}/fork-pr-contributor-approval", "PUT",
+                              {"approval_policy": policy["fork_pr_approval_policy"]})
 
     # -- actions -----------------------------------------------------------------------------------------------
     def actions(self, repo: str, info: dict, policy: dict) -> None:
@@ -226,31 +280,33 @@ class Run:
             print(f"  labels    note: not declared here (left alone): {', '.join(extra)}")
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    mode = ap.add_mutually_exclusive_group()
-    mode.add_argument("--apply", action="store_true", help="write the changes")
-    mode.add_argument("--check", action="store_true", help="exit 1 if anything differs (writes nothing)")
-    ap.add_argument("--repo", action="append", default=[], help="only this repository (repeatable)")
-    ap.add_argument("--section", action="append", choices=SECTIONS, default=[], help="only this section (repeatable)")
-    args = ap.parse_args()
-
-    policy, repos, labels = load("policy.json"), load("repos.json")["repos"], load("labels.json")
-    org = policy["org"]
-    gh = Gh(apply=args.apply)
-    run = Run(gh, org)
-    sections = args.section or list(SECTIONS)
-
+def run_org(gh: Gh, org: str, cfg: dict, policy: dict, labels: list[dict], args: argparse.Namespace,
+            sections: list[str], seen: set[str]) -> int:
+    """Plan or apply one organization; returns its number of changes. Adds the --repo names it holds to `seen`."""
+    info = gh.call(f"orgs/{org}")
+    run = Run(gh, org, (info.get("plan") or {}).get("name", ""))
+    repos = cfg.get("repos", {})
     live = {r["name"]: r for r in gh.call(f"orgs/{org}/repos?per_page=100&type=all") or [] if not r.get("archived")}
-    targets = args.repo or sorted(live)
+    targets = sorted(r for r in args.repo if r in live or r in repos) if args.repo else sorted(live)
+    seen.update(targets)
+    if args.repo and not targets:
+        return 0
     for name in sorted(set(repos) - set(live)):
-        print(f"declared but not on GitHub yet: {name}")
+        if not args.repo or name in args.repo:
+            print(f"declared but not on GitHub yet: {org}/{name}")
     print(f"{'Applying' if args.apply else 'Plan for'} {org}: review mode {policy['review_mode']}, "
           f"sections {', '.join(sections)}\n")
 
-    if "actions" in sections and not args.repo:
-        print(f"{org} (organisation)")
-        run.org_actions(load("actions-allowlist.json"))
+    if not args.repo:
+        print(f"{org} (organisation, {info.get('plan', {}).get('name', 'unknown')} plan)")
+        if "settings" in sections:
+            run.org_settings(info, cfg, policy)
+        if "security" in sections:
+            run.org_security(policy)
+        if "actions" in sections:
+            run.org_actions(load("actions-allowlist.json"), cfg.get("actions_patterns", []), policy)
+        if "rulesets" in sections and info.get("plan", {}).get("name") == "free":
+            print("  rulesets  note: GitHub Free has no organization rulesets; each public repository gets a copy")
 
     for repo in targets:
         if repo not in live:
@@ -261,20 +317,43 @@ def main() -> int:
         if entry is None:
             print("  note      not in repos.json: shared settings only; add an entry for description and topics")
             entry = {}
-        info = gh.call(f"repos/{org}/{repo}")
+        repo_info = gh.call(f"repos/{org}/{repo}")
         if "settings" in sections:
-            run.settings(repo, info, entry, policy)
+            run.settings(repo, repo_info, entry, policy)
         if "security" in sections:
-            run.security(repo, info)
+            run.security(repo, repo_info)
         if "actions" in sections:
-            run.actions(repo, info, policy)
+            run.actions(repo, repo_info, policy)
         if "rulesets" in sections:
-            run.rulesets(repo, info, entry, policy)
+            run.rulesets(repo, repo_info, entry, policy)
         if "labels" in sections:
             run.labels(repo, labels)
+    print(f"\n{org}: {run.drift} change(s) {'applied' if args.apply else 'pending'}.\n")
+    return run.drift
 
-    print(f"\n{run.drift} change(s) {'applied' if args.apply else 'pending'}.")
-    return 1 if (args.check and run.drift) else 0
+
+def main() -> int:
+    orgs = load("repos.json")["orgs"]
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    mode = ap.add_mutually_exclusive_group()
+    mode.add_argument("--apply", action="store_true", help="write the changes")
+    mode.add_argument("--check", action="store_true", help="exit 1 if anything differs (writes nothing)")
+    ap.add_argument("--org", action="append", choices=sorted(orgs), default=[],
+                    help="only this organization (repeatable; default: every organization in repos.json)")
+    ap.add_argument("--repo", action="append", default=[], help="only this repository (repeatable)")
+    ap.add_argument("--section", action="append", choices=SECTIONS, default=[], help="only this section (repeatable)")
+    args = ap.parse_args()
+
+    policy, labels = load("policy.json"), load("labels.json")
+    gh = Gh(apply=args.apply)
+    sections = args.section or list(SECTIONS)
+    drift, seen = 0, set()
+    for org in args.org or list(orgs):
+        drift += run_org(gh, org, orgs[org], policy, labels, args, sections, seen)
+    for name in sorted(set(args.repo) - seen):
+        print(f"{name}: not found in {', '.join(args.org or orgs)}, skipped")
+    print(f"{drift} change(s) {'applied' if args.apply else 'pending'}.")
+    return 1 if (args.check and drift) else 0
 
 
 if __name__ == "__main__":

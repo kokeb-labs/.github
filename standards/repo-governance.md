@@ -4,8 +4,9 @@ How every Kokeb Labs repository is set up and how changes reach `main`. The org 
 open to contributors; the rules already work for more people, and the one rule that changes when a second
 maintainer joins is called out below. Decision: [ADR-0015](adr/0015-solo-maintainer-governance.md).
 
-Settings are kept as code in this repository's `org/` folder (`org/kokeb_org.py`). It shows the plan without
-`--apply`; only an organization owner runs it with `--apply`.
+Settings are kept as code in this repository's `org/` folder (`org/kokeb_org.py`), for both organizations,
+`kokeb-labs` and `kokeb-labs-drivers`. It shows the plan without `--apply`; only an organization owner runs it with
+`--apply`.
 
 ## Branches
 

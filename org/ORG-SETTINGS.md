@@ -1,8 +1,10 @@
 # Organization settings
 
-These are set once, by an owner, at <https://github.com/organizations/kokeb-labs/settings>. They protect the
-organization as a whole; `kokeb_org.py` handles everything per repository. Recheck this list once a year, and
-whenever an owner or maintainer joins or leaves.
+These apply to both organizations, `kokeb-labs` and `kokeb-labs-drivers`, at
+`https://github.com/organizations/<org>/settings`. They protect each organization as a whole. `kokeb_org.py` sets
+what the API allows: the profile fields, base permission, repository and Pages creation, forking, web sign-off, the
+default code security configuration and the Actions policy. The rest is done once by an owner in the UI and is
+marked **UI** below. Recheck this list once a year, and whenever an owner or maintainer joins or leaves.
 
 ## The owner account first
 
@@ -22,15 +24,16 @@ The organization is only as safe as its owner accounts.
 
 ## Profile
 
-- [ ] Name **Kokeb Labs**, a one-line description, the website once the domain is live, and a public contact email
-      on that domain (for example `hello@`).
-- [ ] Avatar: `brand/mark/avatar-500.png`.
-- [ ] **Verified domain** (Settings > Verified and approved domains) once the domain is bought. It puts a Verified
-      badge on the organization page and stops look-alike organizations from claiming it.
+- [ ] Name, one-line description and website: from `repos.json` (**Kokeb Labs**, **Kokeb Labs Drivers**). A
+      public contact email on the domain (for example `hello@`) once it is live.
+- [ ] **UI:** avatar `brand/mark/avatar-500.png`, for both organizations.
+- [ ] **UI:** **Verified domain** (Settings > Verified and approved domains) once the domain is bought, for both
+      organizations. It puts a Verified badge on the organization page and stops look-alike organizations from
+      claiming it.
 
 ## Authentication security
 
-- [ ] **Require two-factor authentication** for everyone in the organization.
+- [ ] **UI:** **Require two-factor authentication** for everyone in the organization.
 
 ## Member privileges
 
@@ -40,26 +43,29 @@ The organization is only as safe as its owner accounts.
 | Repository creation | Owners only (members: none, public or private) | Every new repository goes through `repos.json` |
 | Repository forking | Don't allow forks of private repositories | Unreleased work stays inside |
 | Pages creation | Public allowed, private off | Docs sites are public |
-| Admin repository permissions | Owners only can change visibility, delete or transfer repositories | These are hard to undo |
-| Delete or transfer issues | Owners only | |
-| Team creation | Owners only | |
-| Allow members to create discussions in the organization | Yes | |
+| Admin repository permissions (**UI**) | Owners only can change visibility, delete or transfer repositories | These are hard to undo |
+| Delete or transfer issues (**UI**) | Owners only | |
+| Team creation (**UI**) | Owners only | |
+| Allow members to create discussions in the organization (**UI**) | Yes | |
+
+The rows without **UI** come from `policy.json` (`org_settings`).
 
 ## Actions
 
 | Setting | Value |
 | --- | --- |
-| Policies | Allow `kokeb-labs` actions and reusable workflows, GitHub-owned actions, and the third-party actions in [`actions-allowlist.json`](actions-allowlist.json). `kokeb_org.py --section actions --apply` sets it |
+| Policies | Allow `kokeb-labs` actions and reusable workflows (and in `kokeb-labs-drivers` its own), GitHub-owned actions, and the third-party actions in [`actions-allowlist.json`](actions-allowlist.json). `kokeb_org.py --section actions --apply` sets it |
 | Require actions to be pinned to a full commit SHA | On (also set from `actions-allowlist.json`) |
-| Fork pull request workflows from outside collaborators | Require approval for all outside collaborators |
-| Workflow permissions | Read repository contents only; don't allow GitHub Actions to create or approve pull requests |
+| Fork pull request workflows from outside collaborators | Require approval for all outside collaborators (set by the script) |
+| Workflow permissions | Read repository contents only; don't allow GitHub Actions to create or approve pull requests (set by the script) |
 | Runners | GitHub-hosted only; no self-hosted runners on public repositories |
 
 ## Code security
 
-- [ ] **Code security > Configurations:** apply **GitHub recommended** to all repositories and set it as the
-      default for new ones. That turns on Dependabot, secret scanning with push protection and code scanning
-      default setup as repositories are created. `kokeb_org.py` then only checks it.
+- [ ] **Code security > Configurations:** **GitHub recommended** is the default for new public repositories
+      (`kokeb_org.py` sets it). That turns on Dependabot, secret scanning with push protection and code scanning
+      default setup as repositories are created. Existing repositories get the same features from the script's
+      `security` section.
 - [ ] **Private vulnerability reporting:** on, for all new public repositories.
 
 ## Third-party access
@@ -71,8 +77,10 @@ The organization is only as safe as its owner accounts.
 
 ## Discussions and community
 
-- [ ] **Discussions:** enable organization discussions with `.github` as the source repository. Categories:
-      Announcements (maintainers only), Q&A, Ideas, Show and tell, Driver requests.
+- [ ] **UI:** **Discussions:** enable organization discussions with `.github` as the source repository
+      (Settings > Discussions; the API can't). `kokeb_org.py` turns Discussions on in each `.github` repository,
+      which gives the categories Announcements (maintainers only), General, Ideas, Polls, Q&A and Show and tell.
+      `kokeb-labs-drivers/.github` has a form for each in `.github/DISCUSSION_TEMPLATE/`.
 - [ ] **Sponsors:** later, once there's something to fund.
 
 ## Scaling up
