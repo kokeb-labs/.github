@@ -157,6 +157,23 @@
       ],
       "homepage": ""
     },
+    "driver-pca9685": {
+      "kind": "driver",
+      "description": "C++20 driver for the NXP PCA9685 16-channel 12-bit PWM controller (I2C)",
+      "topics": [
+        "kokeb-labs",
+        "driver",
+        "embedded",
+        "cpp20",
+        "misra-cpp",
+        "header-only",
+        "i2c",
+        "pwm-controller",
+        "nxp",
+        "pca9685"
+      ],
+      "homepage": ""
+    },
     "kokeb-labs.github.io": {
       "kind": "docs",
       "description": "The Kokeb Labs portal: projects, how we build, roadmap and contributing.",
