@@ -5,7 +5,9 @@
       "profile": {
         "name": "Kokeb Labs",
         "description": "Open, brand-free drivers and firmware building blocks for embedded systems.",
-        "blog": "https://kokeb-labs.github.io"
+        "blog": "https://kokeb-labs.github.io",
+        "email": "kokeblabs@gmail.com",
+        "billing_email": "kokeblabs@gmail.com"
       },
       "actions_patterns": [],
       "repos": {
@@ -115,7 +117,9 @@
       "profile": {
         "name": "Kokeb Labs Drivers",
         "description": "C++20 chip drivers for embedded systems: hardware-agnostic, MISRA-checked, fuzzed and documented.",
-        "blog": "https://kokeb-labs.github.io"
+        "blog": "https://kokeb-labs.github.io",
+        "email": "kokeblabs@gmail.com",
+        "billing_email": "kokeblabs@gmail.com"
       },
       "actions_patterns": [
         "kokeb-labs/*"
@@ -278,7 +282,9 @@
       "profile": {
         "name": "Kokeb Labs Open Boards",
         "description": "Open KiCad development boards built around the Kokeb Labs drivers: traced from requirements to test results.",
-        "blog": "https://kokeb-labs.github.io"
+        "blog": "https://kokeb-labs.github.io",
+        "email": "kokeblabs@gmail.com",
+        "billing_email": "kokeblabs@gmail.com"
       },
       "actions_patterns": [
         "kokeb-labs/*"
