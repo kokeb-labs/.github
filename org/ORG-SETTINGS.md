@@ -4,7 +4,9 @@ These apply to all three organizations, `kokeb-labs`, `kokeb-labs-drivers` and `
 `https://github.com/organizations/<org>/settings`. They protect each organization as a whole. `kokeb_org.py` sets
 what the API allows: the profile fields, base permission, repository and Pages creation, forking, web sign-off, the
 default code security configuration and the Actions policy. The rest is done once by an owner in the UI and is
-marked **UI** below. Recheck this list once a year, and whenever an owner or maintainer joins or leaves.
+marked **UI** below; the script reports the ones the API lets it read as `manual` lines. The ordered runbook is
+[standards/checklists/new-organization.md](../standards/checklists/new-organization.md). Recheck this list once a
+year, and whenever an owner or maintainer joins or leaves.
 
 ## The owner account first
 
@@ -21,11 +23,17 @@ The organization is only as safe as its owner accounts.
 - [ ] A **second owner** as soon as there is someone you trust, so the organization survives a lost account.
       Until then, the recovery codes are the backup.
 - [ ] Notifications for security alerts go to an address you read.
+- [ ] **Email privacy (UI):** Settings > Emails: *Keep my email addresses private* and *Block command line pushes
+      that expose my email*. Commits use the GitHub noreply address (`<id>+<login>@users.noreply.github.com`). No
+      personal address appears in a commit, a file, a profile or a public contact; the organization's role address
+      is the only one published. Commits and pull requests carry no author or tool attribution (no co-author lines).
 
 ## Profile
 
-- [ ] Name, one-line description and website: from `repos.json` (**Kokeb Labs**, **Kokeb Labs Drivers**). A
-      public contact email on the domain (for example `hello@`) once it is live.
+- [ ] Name, one-line description, website and public contact email: from `repos.json` (**Kokeb Labs**,
+      **Kokeb Labs Drivers**; the email is the role address `kokeblabs@gmail.com`, which is also the billing email
+      and the security contact in each `.github/SECURITY.md`). Move all three to an address on the domain once it
+      is live.
 - [ ] **UI:** avatar `brand/mark/avatar-500.png`, for every organization.
 - [ ] **UI:** **Verified domain** (Settings > Verified and approved domains) once the domain is bought, for every
       organization. It puts a Verified badge on the organization page and stops look-alike organizations from

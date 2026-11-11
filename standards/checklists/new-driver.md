@@ -5,7 +5,7 @@ checks; [driver.md](../driver.md) is the contract.
 
 ```markdown
 ### Repository
-- [ ] Created from `kokeb-labs/driver-template` with `tools/setup.py --kind driver`, public, named `driver-<chip>`
+- [ ] Created from `kokeb-labs/driver-template` in `kokeb-labs-drivers` with `tools/setup.py --kind driver`, private until its first release candidate, named `driver-<chip>`; follow the [new repository checklist](new-repository.md)
 - [ ] Metadata added in `org/` of `kokeb-labs/.github`; merge settings, security, rulesets and labels applied by an owner
 - [ ] `CODEOWNERS`, `AGENTS.md`, `CLAUDE.md` (`@AGENTS.md`), `.claude/skills/verify/SKILL.md`
 - [ ] `LICENSE` is MIT; `_config/.clang-format` and `_config/.clang-tidy` copied unchanged from the standard

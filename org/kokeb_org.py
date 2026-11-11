@@ -197,6 +197,17 @@ class Run:
             self.gh.write(f"orgs/{self.org}/code-security/configurations/{conf['id']}/defaults", "PUT",
                           {"default_for_new_repos": want["default_for_new_repos"]})
 
+    # -- settings only the web interface can change ------------------------------------------------------------
+    def manual_checks(self, info: dict) -> None:
+        """Print the UI-only settings the API lets us read and that are not as required. Never counts as drift."""
+        open_items = []
+        if not info.get("two_factor_requirement_enabled"):
+            open_items.append("Settings > Authentication security: require two-factor authentication")
+        for item in open_items:
+            print(f"  manual    [ ] {item}")
+        if open_items:
+            print("  manual    the other UI-only items are listed in org/ORG-SETTINGS.md")
+
     # -- organisation Actions policy ---------------------------------------------------------------------------
     def org_actions(self, allow: dict, extra_patterns: list[str], policy: dict) -> None:
         """The org-wide allow-list and SHA pinning, from actions-allowlist.json (patterns compared as a set), the
@@ -323,6 +334,7 @@ def run_org(gh: Gh, org: str, cfg: dict, policy: dict, labels: list[dict], args:
             run.org_security(policy)
         if "actions" in sections:
             run.org_actions(load("actions-allowlist.json"), cfg.get("actions_patterns", []), policy)
+        run.manual_checks(info)
         if "rulesets" in sections and info.get("plan", {}).get("name") == "free":
             print("  rulesets  note: GitHub Free has no organization rulesets; each public repository gets a copy")
 
