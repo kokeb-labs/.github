@@ -52,7 +52,8 @@
             "embedded",
             "cpp"
           ],
-          "homepage": "https://kokeb-labs.github.io/ci-tools/"
+          "homepage": "https://kokeb-labs.github.io/ci-tools/",
+          "code_scanning": "advanced"
         },
         "driver-template": {
           "kind": "template",
@@ -81,6 +82,18 @@
           ],
           "homepage": "https://kokeb-labs.github.io/espidf-tools/"
         },
+        "handbook": {
+          "kind": "docs",
+          "description": "The Kokeb Labs engineering handbook: every rule for C, C++, CMake, docs, CI and agents, with the check that verifies it.",
+          "topics": [
+            "kokeb-labs",
+            "handbook",
+            "standards",
+            "cpp",
+            "embedded"
+          ],
+          "homepage": "https://kokeb-labs.github.io/handbook/"
+        },
         "kokeb-labs.github.io": {
           "kind": "docs",
           "description": "The Kokeb Labs portal: projects, how we build, roadmap and contributing.",
@@ -90,6 +103,11 @@
             "mkdocs"
           ],
           "homepage": "https://kokeb-labs.github.io/"
+        },
+        "standards-private": {
+          "kind": "meta",
+          "description": "Licensed coding standards: editions, hashes and private notes (no standard text)",
+          "required_checks": []
         }
       }
     },
