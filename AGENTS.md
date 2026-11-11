@@ -10,8 +10,9 @@ first.
 
 - `standards/`: the standard. A rule change comes with an ADR in `standards/adr/` and updates every page, checklist
   and config it touches.
-- `org/`: settings, security, rulesets and labels as code, for both `kokeb-labs` and `kokeb-labs-drivers`. Agents
-  may run `org/kokeb_org.py` without `--apply` to show the plan; only an organization owner runs it with `--apply`.
+- `org/`: settings, security, rulesets and labels as code, for `kokeb-labs`, `kokeb-labs-drivers` and
+  `kokeb-labs-open-boards`. Agents may run `org/kokeb_org.py` without `--apply` to show the plan; only an
+  organization owner runs it with `--apply`.
 - `brand/`: the logo generator. Regenerate the assets with `python3 brand/generate.py`; never edit generated files
   by hand.
 - `profile/README.md`: the organization page.

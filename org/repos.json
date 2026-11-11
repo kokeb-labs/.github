@@ -1,5 +1,5 @@
 {
-  "_comment": "One entry per organization: its profile (the organization page fields), the extra Actions patterns it allows besides its own repositories, and one entry per repository. kind: meta | tooling | template | driver | core | hal | docs. required_checks overrides policy.default_required_checks; [] means no required check yet.",
+  "_comment": "One entry per organization: its profile (the organization page fields), the extra Actions patterns it allows besides its own repositories, and one entry per repository. kind: meta | tooling | template | driver | core | hal | docs | board | library. required_checks overrides policy.default_required_checks; [] means no required check yet.",
   "orgs": {
     "kokeb-labs": {
       "profile": {
@@ -23,6 +23,24 @@
             "gate"
           ]
         },
+        "board-template": {
+          "kind": "template",
+          "description": "Start a new board: board record, version-linked requirements trace, trace check, folders for ECAD, enclosure, firmware and manufacturing, and CI.",
+          "topics": [
+            "kokeb-labs",
+            "template",
+            "board",
+            "kicad",
+            "open-hardware",
+            "requirements",
+            "traceability",
+            "embedded"
+          ],
+          "homepage": "",
+          "required_checks": [
+            "gate"
+          ]
+        },
         "ci-tools": {
           "kind": "tooling",
           "description": "Reusable GitHub Actions workflows, lint configs and the documentation theme for Kokeb Labs repositories.",
@@ -35,18 +53,6 @@
             "cpp"
           ],
           "homepage": "https://kokeb-labs.github.io/ci-tools/"
-        },
-        "espidf-tools": {
-          "kind": "tooling",
-          "description": "Build, flash and setup scripts for ESP-IDF projects and examples.",
-          "topics": [
-            "kokeb-labs",
-            "esp-idf",
-            "esp32",
-            "tooling",
-            "embedded"
-          ],
-          "homepage": "https://kokeb-labs.github.io/espidf-tools/"
         },
         "driver-template": {
           "kind": "template",
@@ -62,6 +68,18 @@
             "misra-cpp"
           ],
           "homepage": ""
+        },
+        "espidf-tools": {
+          "kind": "tooling",
+          "description": "Build, flash and setup scripts for ESP-IDF projects and examples.",
+          "topics": [
+            "kokeb-labs",
+            "esp-idf",
+            "esp32",
+            "tooling",
+            "embedded"
+          ],
+          "homepage": "https://kokeb-labs.github.io/espidf-tools/"
         },
         "kokeb-labs.github.io": {
           "kind": "docs",
@@ -235,6 +253,82 @@
             "tle92466ed"
           ],
           "homepage": ""
+        }
+      }
+    },
+    "kokeb-labs-open-boards": {
+      "profile": {
+        "name": "Kokeb Labs Open Boards",
+        "description": "Open KiCad development boards built around the Kokeb Labs drivers: traced from requirements to test results.",
+        "blog": "https://kokeb-labs.github.io"
+      },
+      "actions_patterns": [
+        "kokeb-labs/*"
+      ],
+      "repos": {
+        ".github": {
+          "kind": "meta",
+          "description": "Kokeb Labs Open Boards organization profile, community files, issue and pull request templates.",
+          "topics": [
+            "kokeb-labs",
+            "boards",
+            "community"
+          ],
+          "homepage": "",
+          "discussions": true,
+          "required_checks": [
+            "gate"
+          ]
+        },
+        "board-bmp581-breakout": {
+          "kind": "board",
+          "description": "Breakout board for the Bosch BMP581 pressure sensor, built around driver-bmp581. Concept stage.",
+          "topics": [
+            "kokeb-labs",
+            "board",
+            "kicad",
+            "open-hardware",
+            "pressure-sensor",
+            "bosch",
+            "bmp581",
+            "breakout"
+          ],
+          "homepage": "",
+          "required_checks": [
+            "gate"
+          ]
+        },
+        "kokeb-blocks": {
+          "kind": "library",
+          "description": "Reusable circuit blocks that Kokeb Labs boards are assembled from, each with interfaces, requirements and verification.",
+          "topics": [
+            "kokeb-labs",
+            "kicad",
+            "open-hardware",
+            "circuit-blocks",
+            "pcb",
+            "requirements"
+          ],
+          "homepage": "",
+          "required_checks": [
+            "gate"
+          ]
+        },
+        "kokeb-libs": {
+          "kind": "library",
+          "description": "KiCad symbols, footprints and 3D models for Kokeb Labs boards, each with a review status and a datasheet reference.",
+          "topics": [
+            "kokeb-labs",
+            "kicad",
+            "kicad-library",
+            "open-hardware",
+            "footprints",
+            "symbols"
+          ],
+          "homepage": "",
+          "required_checks": [
+            "gate"
+          ]
         }
       }
     }
