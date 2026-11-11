@@ -48,7 +48,8 @@ Without `--repo`, each section also covers the organization itself:
    `kokeb-labs-drivers`, boards, KiCad libraries and circuit blocks in `kokeb-labs-open-boards`, everything else in
    `kokeb-labs`.
 2. Add its entry under its organization in `repos.json`, in a pull request. A repository whose CI gate doesn't
-   exist yet gets `"required_checks": []` until it does.
+   exist yet gets `"required_checks": []` until it does, and one that runs its own CodeQL workflow gets
+   `"code_scanning": "advanced"`, so the tool leaves the default setup off.
 3. After the merge, an owner runs `python3 org/kokeb_org.py --org <org> --repo <name> --apply`.
 
 A repository that moves to the other organization moves its entry with it.

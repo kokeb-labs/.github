@@ -5,7 +5,8 @@ privileges, repository settings, security, Actions policy, rulesets and labels.
 Desired state lives next to this file:
   policy.json      settings shared by every organization and repository, review mode, default required checks
   repos.json       one entry per organization (profile, extra Actions patterns) with one entry per repository:
-                   kind, description, topics, homepage, overrides
+                   kind, description, topics, homepage, overrides (`code_scanning: advanced` leaves CodeQL to the
+                   repository's own workflow)
   labels.json      the label set
   rulesets/*.json  the rulesets (main-review.<mode>.json picks the review mode)
   actions-allowlist.json  both organizations' Actions policy: allowed third-party actions, SHA pinning
@@ -122,7 +123,7 @@ class Run:
             self.change(repo, "security", "turn on Dependabot security updates")
             self.gh.write(f"repos/{self.org}/{repo}/automated-security-fixes", "PUT")
 
-    def security(self, repo: str, info: dict) -> None:
+    def security(self, repo: str, info: dict, entry: dict | None = None) -> None:
         if info.get("visibility") != "public":
             self.dependabot(repo)
             print("  security  private repository: Dependabot only (secret scanning, private vulnerability "
@@ -142,6 +143,10 @@ class Run:
             self.change(repo, "security", "turn on private vulnerability reporting")
             self.gh.write(f"repos/{self.org}/{repo}/private-vulnerability-reporting", "PUT")
         cs = self.gh.call(f"repos/{self.org}/{repo}/code-scanning/default-setup", ok_missing=True) or {}
+        # "code_scanning": "advanced" in the entry: the repository runs its own CodeQL workflow, and turning the
+        # default setup on next to it would double the analysis and fight over the same results.
+        if (entry or {}).get("code_scanning") == "advanced":
+            return
         if cs and cs.get("state") != "configured":
             self.change(repo, "security", "turn on code scanning (default setup)")
             try:
@@ -321,7 +326,7 @@ def run_org(gh: Gh, org: str, cfg: dict, policy: dict, labels: list[dict], args:
         if "settings" in sections:
             run.settings(repo, repo_info, entry, policy)
         if "security" in sections:
-            run.security(repo, repo_info)
+            run.security(repo, repo_info, entry)
         if "actions" in sections:
             run.actions(repo, repo_info, policy)
         if "rulesets" in sections:
