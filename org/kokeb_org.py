@@ -24,6 +24,7 @@ import argparse
 import json
 import subprocess
 import sys
+import time
 from pathlib import Path
 from typing import Any
 
@@ -61,6 +62,17 @@ class Gh:
         if not self.apply:
             return
         self.call(path, method, body)
+
+    def write_retry(self, path: str, method: str, body: Any = None, tries: int = 4, wait: float = 5.0) -> None:
+        """`write`, trying again after `wait` seconds while GitHub answers 422 (a change that has not propagated)."""
+        for attempt in range(1, tries + 1):
+            try:
+                self.write(path, method, body)
+                return
+            except RuntimeError as err:
+                if "HTTP 422" not in str(err) or attempt == tries:
+                    raise
+                time.sleep(wait)
 
 
 def load(name: str) -> Any:
@@ -140,7 +152,8 @@ class Run:
         pvr = self.gh.call(f"repos/{self.org}/{repo}/private-vulnerability-reporting", ok_missing=True) or {}
         if not pvr.get("enabled"):
             self.change(repo, "security", "turn on private vulnerability reporting")
-            self.gh.write(f"repos/{self.org}/{repo}/private-vulnerability-reporting", "PUT")
+            # Right after a repository goes public the endpoint can answer 422 for a few seconds.
+            self.gh.write_retry(f"repos/{self.org}/{repo}/private-vulnerability-reporting", "PUT")
         cs = self.gh.call(f"repos/{self.org}/{repo}/code-scanning/default-setup", ok_missing=True) or {}
         if cs and cs.get("state") != "configured":
             self.change(repo, "security", "turn on code scanning (default setup)")
