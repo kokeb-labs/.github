@@ -1,9 +1,8 @@
 {
-  "_comment": "The organisation's Actions policy. Only these third-party actions can run in kokeb-labs, besides GitHub-owned actions and anything in kokeb-labs itself, and every action must be pinned to a full commit SHA. Add an entry by pull request with the checklist in org/README.md ('Trying out a new action'); an owner runs kokeb_org.py --apply after merging.",
+  "_comment": "The Actions policy of every organization in repos.json. Only these third-party actions can run, besides GitHub-owned actions, anything in the organization itself (<org>/*) and the organization's actions_patterns in repos.json, and every action must be pinned to a full commit SHA. Add an entry by pull request with the checklist in org/README.md ('Trying out a new action'); an owner runs kokeb_org.py --apply after merging.",
   "github_owned_allowed": true,
   "verified_allowed": false,
   "sha_pinning_required": true,
-  "own_org": "kokeb-labs/*",
   "actions": [
     {"action": "DavidAnson/markdownlint-cli2-action", "used_by": "ci-tools ru-markdown-lint", "kind": "node24",
      "why": "Runs markdownlint-cli2, by the author of markdownlint.", "permissions": "contents: read",
