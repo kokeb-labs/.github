@@ -19,9 +19,29 @@ flowchart TD
   core -- calls --> drv["Chip drivers<br/>driver-&lt;chip&gt;"]
   drv -- "through an MCU port" --> chip["The chip"]
   tpl["driver-template"] -. starts .-> drv
+  ob["Open boards<br/>kokeb-labs-open-boards"] -- built around --> drv
+  btpl["board-template"] -. starts .-> ob
 ```
 
 Start at the portal: **<https://kokeb-labs.github.io/>**.
+
+Each board is traced from what people need down to the part on the board and its test results:
+
+```mermaid
+flowchart TD
+  need["Need<br/>what a user or integrator wants"] --> req["Requirements<br/>testable, versioned"]
+  req --> hw["Hardware<br/>KiCad, circuit blocks, reviewed parts"]
+  req --> fw["Firmware<br/>the chip drivers"]
+  req --> mech["Enclosure"]
+  hw --> ver["Verification<br/>procedures, results, evidence"]
+  fw --> ver
+  mech --> ver
+  ver --> rel["Release<br/>signed tag, evidence pack, manufacturing package"]
+```
+
+Requirements, risks and verifications are data linked by version. Change a need or a chip choice and every
+requirement and test that depends on it is flagged in the same pull request. The format and the check live in
+[`board-template`](https://github.com/kokeb-labs/board-template).
 
 ## What is here
 
@@ -32,6 +52,9 @@ Start at the portal: **<https://kokeb-labs.github.io/>**.
   file; only what you pick is built.
 - **Templates.** [`driver-template`](https://github.com/kokeb-labs/driver-template) turns into a new driver or
   library with one command: code, host tests, an ESP32 example, docs and CI included.
+- **Open boards.** [`kokeb-labs-open-boards`](https://github.com/kokeb-labs-open-boards) holds KiCad boards built
+  around the drivers, the parts library and the circuit blocks they share. [`board-template`](https://github.com/kokeb-labs/board-template)
+  starts a new board with its record, its requirements trace and its checks.
 - **Shared CI and docs.** [`ci-tools`](https://github.com/kokeb-labs/ci-tools) holds the reusable workflows and the
   documentation theme every repository uses.
 
