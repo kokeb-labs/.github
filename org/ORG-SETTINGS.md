@@ -1,6 +1,6 @@
 # Organization settings
 
-These apply to both organizations, `kokeb-labs` and `kokeb-labs-drivers`, at
+These apply to all three organizations, `kokeb-labs`, `kokeb-labs-drivers` and `kokeb-labs-open-boards`, at
 `https://github.com/organizations/<org>/settings`. They protect each organization as a whole. `kokeb_org.py` sets
 what the API allows: the profile fields, base permission, repository and Pages creation, forking, web sign-off, the
 default code security configuration and the Actions policy. The rest is done once by an owner in the UI and is
@@ -26,9 +26,9 @@ The organization is only as safe as its owner accounts.
 
 - [ ] Name, one-line description and website: from `repos.json` (**Kokeb Labs**, **Kokeb Labs Drivers**). A
       public contact email on the domain (for example `hello@`) once it is live.
-- [ ] **UI:** avatar `brand/mark/avatar-500.png`, for both organizations.
-- [ ] **UI:** **Verified domain** (Settings > Verified and approved domains) once the domain is bought, for both
-      organizations. It puts a Verified badge on the organization page and stops look-alike organizations from
+- [ ] **UI:** avatar `brand/mark/avatar-500.png`, for every organization.
+- [ ] **UI:** **Verified domain** (Settings > Verified and approved domains) once the domain is bought, for every
+      organization. It puts a Verified badge on the organization page and stops look-alike organizations from
       claiming it.
 
 ## Authentication security
@@ -80,7 +80,8 @@ The rows without **UI** come from `policy.json` (`org_settings`).
 - [ ] **UI:** **Discussions:** enable organization discussions with `.github` as the source repository
       (Settings > Discussions; the API can't). `kokeb_org.py` turns Discussions on in each `.github` repository,
       which gives the categories Announcements (maintainers only), General, Ideas, Polls, Q&A and Show and tell.
-      `kokeb-labs-drivers/.github` has a form for each in `.github/DISCUSSION_TEMPLATE/`.
+      `kokeb-labs-drivers/.github` and `kokeb-labs-open-boards/.github` have a form for each in
+      `.github/DISCUSSION_TEMPLATE/`.
 - [ ] **Sponsors:** later, once there's something to fund.
 
 ## Scaling up
