@@ -309,6 +309,23 @@
             "ntc"
           ],
           "homepage": ""
+        },
+        "driver-fdo2": {
+          "kind": "driver",
+          "description": "C++20 driver for the PyroScience FDO2 optical oxygen sensor modules on UART",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "uart",
+            "oxygen-sensor",
+            "optical-sensor",
+            "pyroscience"
+          ],
+          "homepage": ""
         }
       }
     },
