@@ -292,6 +292,23 @@
             "mcp9700"
           ],
           "homepage": ""
+        },
+        "driver-ntc-thermistor": {
+          "kind": "driver",
+          "description": "C++20 driver for NTC thermistors on an ADC, any part: B-parameter, Steinhart-Hart and lookup tables",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "adc",
+            "temperature-sensor",
+            "thermistor",
+            "ntc"
+          ],
+          "homepage": ""
         }
       }
     },
