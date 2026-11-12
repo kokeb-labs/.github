@@ -377,6 +377,23 @@
             "motor-drive"
           ],
           "homepage": ""
+        },
+        "driver-dynamixel": {
+          "kind": "driver",
+          "description": "C++20 driver for ROBOTIS DYNAMIXEL servos, protocols 1.0 and 2.0, over a half-duplex UART",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "uart",
+            "servo",
+            "dynamixel",
+            "robotis"
+          ],
+          "homepage": ""
         }
       }
     },
