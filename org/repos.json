@@ -343,6 +343,23 @@
             "sfm"
           ],
           "homepage": ""
+        },
+        "driver-ads9324": {
+          "kind": "driver",
+          "description": "C++20 driver for the TI ADS9324 16-channel, 16-bit, 1 MSPS simultaneous-sampling SAR ADC with integrated PGA and SPI interface",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "spi",
+            "adc",
+            "simultaneous-sampling",
+            "texas-instruments"
+          ],
+          "homepage": ""
         }
       }
     },
