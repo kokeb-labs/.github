@@ -326,6 +326,23 @@
             "pyroscience"
           ],
           "homepage": ""
+        },
+        "driver-sfm-flow-meter": {
+          "kind": "driver",
+          "description": "C++20 driver for the Sensirion SFM family of I2C mass flow meters (SFM3000 to SFM6000D)",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "i2c",
+            "flow-sensor",
+            "sensirion",
+            "sfm"
+          ],
+          "homepage": ""
         }
       }
     },
