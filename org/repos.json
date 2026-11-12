@@ -360,6 +360,23 @@
             "texas-instruments"
           ],
           "homepage": ""
+        },
+        "driver-canopen-client": {
+          "kind": "driver",
+          "description": "C++20 CANopen client driver: NMT master, SDO, heartbeat, EMCY, PDO and a CiA 402 drive state machine over a CAN frame port",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "can",
+            "canopen",
+            "cia402",
+            "motor-drive"
+          ],
+          "homepage": ""
         }
       }
     },
