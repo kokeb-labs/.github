@@ -484,6 +484,24 @@
             "motion-control"
           ],
           "homepage": ""
+        },
+        "driver-alicat-basis2": {
+          "kind": "driver",
+          "description": "C++20 driver for the Alicat BASIS 2 gas mass flow meters and controllers (B and BC series) over serial, with the ASCII protocol and Modbus RTU.",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "mass-flow",
+            "flow-controller",
+            "alicat",
+            "modbus",
+            "uart"
+          ],
+          "homepage": ""
         }
       }
     },
