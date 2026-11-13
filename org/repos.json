@@ -465,6 +465,25 @@
             "motion-control"
           ],
           "homepage": ""
+        },
+        "driver-tmc9660": {
+          "kind": "driver",
+          "description": "C++20 driver for the TMC9660 servo controller and gate driver (bootloader, parameter mode and register mode over SPI or UART)",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "servo",
+            "motor-driver",
+            "gate-driver",
+            "trinamic",
+            "tmc9660",
+            "motion-control"
+          ],
+          "homepage": ""
         }
       }
     },
