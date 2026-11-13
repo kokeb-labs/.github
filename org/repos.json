@@ -447,6 +447,24 @@
             "esp32"
           ],
           "homepage": ""
+        },
+        "driver-tmc5160": {
+          "kind": "driver",
+          "description": "C++20 driver for the Trinamic TMC5160 and TMC5160A stepper motor controller and driver with SPI and UART interfaces",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "stepper",
+            "motor-driver",
+            "trinamic",
+            "tmc5160",
+            "motion-control"
+          ],
+          "homepage": ""
         }
       }
     },
