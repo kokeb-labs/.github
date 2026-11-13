@@ -429,6 +429,24 @@
             "smartdisplay"
           ],
           "homepage": ""
+        },
+        "driver-ws2812-rmt": {
+          "kind": "driver",
+          "description": "C++20 driver for single-wire addressable RGB and RGBW LEDs (WS2812, SK6812 and compatible) over a timed bit stream, with an ESP32 RMT port",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "led",
+            "ws2812",
+            "sk6812",
+            "neopixel",
+            "esp32"
+          ],
+          "homepage": ""
         }
       }
     },
