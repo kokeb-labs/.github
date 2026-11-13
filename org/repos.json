@@ -394,6 +394,23 @@
             "robotis"
           ],
           "homepage": ""
+        },
+        "driver-pf1550": {
+          "kind": "driver",
+          "description": "C++20 driver for the NXP PF1550 power management IC: single-cell Li-ion linear charger, three buck regulators and three LDOs, on I2C",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "i2c",
+            "pmic",
+            "battery-charger",
+            "pf1550"
+          ],
+          "homepage": ""
         }
       }
     },
