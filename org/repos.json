@@ -502,6 +502,27 @@
             "uart"
           ],
           "homepage": ""
+        },
+        "driver-bno08x": {
+          "kind": "driver",
+          "description": "C++20 driver for the Hillcrest Labs / CEVA BNO08x family of 9-axis orientation sensors over SHTP, with I2C, SPI and UART-RVC transports.",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "imu",
+            "orientation",
+            "sensor-fusion",
+            "bno08x",
+            "shtp",
+            "i2c",
+            "spi",
+            "uart"
+          ],
+          "homepage": ""
         }
       }
     },
