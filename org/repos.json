@@ -411,6 +411,24 @@
             "pf1550"
           ],
           "homepage": ""
+        },
+        "driver-isf15acp4": {
+          "kind": "driver",
+          "description": "C++20 driver for NKK SmartDisplay OLED pushbuttons and displays (ISF15ACP4, ISC15ANP4, ISC01P) over SPI",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "spi",
+            "oled",
+            "display",
+            "nkk",
+            "smartdisplay"
+          ],
+          "homepage": ""
         }
       }
     },
