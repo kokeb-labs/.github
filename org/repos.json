@@ -110,6 +110,24 @@
           "kind": "meta",
           "description": "Licensed coding standards: editions, hashes and private notes (no standard text)",
           "required_checks": []
+        },
+        "kb-core": {
+          "kind": "library",
+          "description": "Kokeb Labs core library: MISRA-aware C++20 utilities, RTOS wrappers, interface concepts and device handlers, with chip drivers pinned as release tags.",
+          "topics": [
+            "kokeb-labs",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "rtos",
+            "hal",
+            "esp32",
+            "firmware"
+          ],
+          "homepage": "",
+          "required_checks": [
+            "gate"
+          ]
         }
       }
     },
