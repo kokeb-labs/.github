@@ -579,6 +579,25 @@
             "freertos",
             "hal"
           ]
+        },
+        "driver-se05x": {
+          "kind": "driver",
+          "description": "C++20 driver for the NXP EdgeLock SE05x secure elements (SE050, SE051, SE052) over I2C with T=1: keys, signatures, ECDH, attestation, secure storage, certificates and SCP03, with an easy hardware root-of-trust facade.",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "secure-element",
+            "hardware-root-of-trust",
+            "se050",
+            "edgelock",
+            "scp03",
+            "i2c"
+          ],
+          "homepage": ""
         }
       }
     },
