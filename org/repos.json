@@ -541,6 +541,44 @@
             "uart"
           ],
           "homepage": ""
+        },
+        "port-esp32": {
+          "kind": "library",
+          "homepage": "",
+          "required_checks": [
+            "gate"
+          ],
+          "description": "ESP32 family port: ESP-IDF backed implementations of the bus, GPIO, timer and RTOS interface concepts that drivers and handlers bind to.",
+          "topics": [
+            "kokeb-labs",
+            "port",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "esp32",
+            "esp-idf",
+            "freertos",
+            "hal"
+          ]
+        },
+        "port-stm32": {
+          "kind": "library",
+          "homepage": "",
+          "required_checks": [
+            "gate"
+          ],
+          "description": "STM32 family port: STM32 HAL/LL backed implementations of the bus, GPIO, timer and RTOS interface concepts that drivers and handlers bind to.",
+          "topics": [
+            "kokeb-labs",
+            "port",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "stm32",
+            "stm32-hal",
+            "freertos",
+            "hal"
+          ]
         }
       }
     },
