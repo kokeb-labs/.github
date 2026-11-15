@@ -16,5 +16,11 @@
   {"name": "question", "color": "d876e3", "description": "Better asked in Discussions"},
   {"name": "wontfix", "color": "ffffff", "description": "Not planned"},
   {"name": "board-request", "color": "5319e7", "description": "A new board, library part or circuit block"},
-  {"name": "erratum", "color": "b60205", "description": "A known anomaly in a released design; listed in the board's errata"}
+  {"name": "erratum", "color": "b60205", "description": "A known anomaly in a released design or a datasheet; listed in its errata"},
+  {"name": "port-request", "color": "1d76db", "description": "A new port, MCU family or target"},
+  {"name": "needs-datasheet", "color": "fbca04", "description": "A public vendor datasheet link is missing or not on a vendor site"},
+  {"name": "duplicate", "color": "cfd3d7", "description": "Already requested or already available"},
+  {"name": "agent:ready", "color": "0e8a16", "description": "Approved by a maintainer for an agent to pick up"},
+  {"name": "agent:claimed", "color": "5319e7", "description": "An agent is working on it"},
+  {"name": "agent:blocked", "color": "d93f0b", "description": "An agent stopped and needs a maintainer"}
 ]
