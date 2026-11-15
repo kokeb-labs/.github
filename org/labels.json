@@ -20,7 +20,7 @@
   {"name": "port-request", "color": "1d76db", "description": "A new port, MCU family or target"},
   {"name": "needs-datasheet", "color": "fbca04", "description": "A public vendor datasheet link is missing or not on a vendor site"},
   {"name": "duplicate", "color": "cfd3d7", "description": "Already requested or already available"},
-  {"name": "agent:ready", "color": "0e8a16", "description": "Approved by a maintainer for an agent to pick up"},
+  {"name": "example", "color": "c5def5", "description": "A worked example of a request, kept to show the process; no work is planned"},  {"name": "agent:ready", "color": "0e8a16", "description": "Approved by a maintainer for an agent to pick up"},
   {"name": "agent:claimed", "color": "5319e7", "description": "An agent is working on it"},
   {"name": "agent:blocked", "color": "d93f0b", "description": "An agent stopped and needs a maintainer"}
 ]
