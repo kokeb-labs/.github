@@ -128,6 +128,11 @@
           "required_checks": [
             "gate"
           ]
+        },
+        "driver-factory": {
+          "kind": "meta",
+          "description": "Driver factory: job state, evidence and CI-slot locks for agent-built drivers (private)",
+          "required_checks": []
         }
       }
     },
@@ -170,7 +175,8 @@
             "spi",
             "adc",
             "texas-instruments",
-            "ads7952"
+            "ads7952",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -187,7 +193,8 @@
             "spi",
             "magnetic-encoder",
             "ams-osram",
-            "as5047u"
+            "as5047u",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -204,7 +211,8 @@
             "spi",
             "eeprom",
             "microchip",
-            "at25040b"
+            "at25040b",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -222,7 +230,8 @@
             "spi",
             "pressure-sensor",
             "bosch",
-            "bmp581"
+            "bmp581",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -239,7 +248,8 @@
             "spi",
             "solenoid-driver",
             "analog-devices",
-            "max22200"
+            "max22200",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -256,7 +266,8 @@
             "i2c",
             "pwm-controller",
             "nxp",
-            "pca9685"
+            "pca9685",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -273,7 +284,8 @@
             "i2c",
             "gpio-expander",
             "nxp",
-            "pcal9555"
+            "pcal9555",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -290,7 +302,8 @@
             "spi",
             "solenoid-driver",
             "infineon",
-            "tle92466ed"
+            "tle92466ed",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -307,7 +320,8 @@
             "adc",
             "temperature-sensor",
             "microchip",
-            "mcp9700"
+            "mcp9700",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -324,7 +338,8 @@
             "adc",
             "temperature-sensor",
             "thermistor",
-            "ntc"
+            "ntc",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -341,7 +356,8 @@
             "uart",
             "oxygen-sensor",
             "optical-sensor",
-            "pyroscience"
+            "pyroscience",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -358,7 +374,8 @@
             "i2c",
             "flow-sensor",
             "sensirion",
-            "sfm"
+            "sfm",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -375,7 +392,8 @@
             "spi",
             "adc",
             "simultaneous-sampling",
-            "texas-instruments"
+            "texas-instruments",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -392,7 +410,8 @@
             "can",
             "canopen",
             "cia402",
-            "motor-drive"
+            "motor-drive",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -409,7 +428,8 @@
             "uart",
             "servo",
             "dynamixel",
-            "robotis"
+            "robotis",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -426,7 +446,8 @@
             "i2c",
             "pmic",
             "battery-charger",
-            "pf1550"
+            "pf1550",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -444,7 +465,8 @@
             "oled",
             "display",
             "nkk",
-            "smartdisplay"
+            "smartdisplay",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -462,7 +484,8 @@
             "ws2812",
             "sk6812",
             "neopixel",
-            "esp32"
+            "esp32",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -480,7 +503,8 @@
             "motor-driver",
             "trinamic",
             "tmc5160",
-            "motion-control"
+            "motion-control",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -499,7 +523,8 @@
             "gate-driver",
             "trinamic",
             "tmc9660",
-            "motion-control"
+            "motion-control",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -517,7 +542,8 @@
             "flow-controller",
             "alicat",
             "modbus",
-            "uart"
+            "uart",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -538,7 +564,8 @@
             "shtp",
             "i2c",
             "spi",
-            "uart"
+            "uart",
+            "kb-driver"
           ],
           "homepage": ""
         },
@@ -558,7 +585,8 @@
             "esp32",
             "esp-idf",
             "freertos",
-            "hal"
+            "hal",
+            "kb-port"
           ]
         },
         "port-stm32": {
@@ -577,7 +605,8 @@
             "stm32",
             "stm32-hal",
             "freertos",
-            "hal"
+            "hal",
+            "kb-port"
           ]
         },
         "driver-se05x": {
@@ -595,9 +624,22 @@
             "se050",
             "edgelock",
             "scp03",
-            "i2c"
+            "i2c",
+            "kb-driver"
           ],
           "homepage": ""
+        },
+        "driver-requests": {
+          "kind": "meta",
+          "description": "Request a chip driver, a port or a target, or report a datasheet erratum. Requests are triaged on the Driver pipeline board.",
+          "topics": [
+            "kokeb-labs",
+            "drivers",
+            "requests",
+            "community"
+          ],
+          "homepage": "",
+          "required_checks": []
         }
       }
     },
