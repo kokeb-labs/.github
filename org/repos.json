@@ -573,7 +573,7 @@
           "kind": "library",
           "homepage": "",
           "required_checks": [
-            "gate"
+            "CI gate / gate"
           ],
           "description": "ESP32 family port: ESP-IDF backed implementations of the bus, GPIO, timer and RTOS interface concepts that drivers and handlers bind to.",
           "topics": [
