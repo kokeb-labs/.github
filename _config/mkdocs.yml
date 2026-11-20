@@ -1,0 +1,11 @@
+# Figure configuration for Kokeb Labs organisation profile: it anchors `kokeb-docs`, the shared figure kit in
+# kokeb-labs/ci-tools. The kit draws docs/model/*.yml into the committed light and dark SVGs in docs/diagrams/ and
+# fails on any Mermaid fence or .mmd file. This repository publishes no MkDocs site. From the repository root:
+#
+#   pip install "git+https://github.com/kokeb-labs/ci-tools@v1#subdirectory=packages/kokeb-mkdocs-theme"
+#   kokeb-docs figures          draw the figures from docs/model
+#   kokeb-docs check            what CI runs
+site_name: Kokeb Labs organisation profile
+docs_dir: ../docs
+extra:
+  no_mermaid: true

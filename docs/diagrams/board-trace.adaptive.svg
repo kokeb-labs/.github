@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="762" viewBox="0 0 640 762" role="img" aria-labelledby="board-trace-title board-trace-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" class="fk">
+<title id="board-trace-title">How a board is traced</title>
+<desc id="board-trace-desc">Trace of a board from a need to a release: needs lead to requirements, requirements lead to the hardware, firmware and enclosure, those lead to verification, and verification leads to the release.</desc>
+<style>
+.fk{--fk-blue-strong:#2563EB;--fk-brand-strong:#9A4A17;--fk-canvas:#FFFFFF;--fk-card:#FFFFFF;--fk-frame:#E2E7EE;--fk-green-strong:#15803D;--fk-hair:#E2E7EE;--fk-ink:#0E1726;--fk-ink2:#2B3442;--fk-line:#738093;--fk-rail:#7C8798;--fk-teal-strong:#0B7A72;}
+@media (prefers-color-scheme:dark){.fk{--fk-blue-strong:#60A5FA;--fk-brand-strong:#F4B942;--fk-canvas:#0E131A;--fk-card:#151C26;--fk-frame:#283241;--fk-green-strong:#4ADE80;--fk-hair:#252F3C;--fk-ink:#E8EDF3;--fk-ink2:#D2DAE4;--fk-line:#6C7889;--fk-rail:#6C7889;--fk-teal-strong:#2BB3A3;}}
+:root[data-theme="dark"] .fk,[data-md-color-scheme="slate"] .fk{--fk-blue-strong:#60A5FA;--fk-brand-strong:#F4B942;--fk-canvas:#0E131A;--fk-card:#151C26;--fk-frame:#283241;--fk-green-strong:#4ADE80;--fk-hair:#252F3C;--fk-ink:#E8EDF3;--fk-ink2:#D2DAE4;--fk-line:#6C7889;--fk-rail:#6C7889;--fk-teal-strong:#2BB3A3;}
+:root[data-theme="light"] .fk,[data-md-color-scheme="default"] .fk{--fk-blue-strong:#2563EB;--fk-brand-strong:#9A4A17;--fk-canvas:#FFFFFF;--fk-card:#FFFFFF;--fk-frame:#E2E7EE;--fk-green-strong:#15803D;--fk-hair:#E2E7EE;--fk-ink:#0E1726;--fk-ink2:#2B3442;--fk-line:#738093;--fk-rail:#7C8798;--fk-teal-strong:#0B7A72;}
+.fk-f-blue-strong{fill:var(--fk-blue-strong)}.fk-s-blue-strong{stroke:var(--fk-blue-strong)}
+.fk-f-brand-strong{fill:var(--fk-brand-strong)}.fk-s-brand-strong{stroke:var(--fk-brand-strong)}
+.fk-f-canvas{fill:var(--fk-canvas)}.fk-s-canvas{stroke:var(--fk-canvas)}
+.fk-f-card{fill:var(--fk-card)}.fk-s-card{stroke:var(--fk-card)}
+.fk-f-frame{fill:var(--fk-frame)}.fk-s-frame{stroke:var(--fk-frame)}
+.fk-f-green-strong{fill:var(--fk-green-strong)}.fk-s-green-strong{stroke:var(--fk-green-strong)}
+.fk-f-hair{fill:var(--fk-hair)}.fk-s-hair{stroke:var(--fk-hair)}
+.fk-f-ink{fill:var(--fk-ink)}.fk-s-ink{stroke:var(--fk-ink)}
+.fk-f-ink2{fill:var(--fk-ink2)}.fk-s-ink2{stroke:var(--fk-ink2)}
+.fk-f-line{fill:var(--fk-line)}.fk-s-line{stroke:var(--fk-line)}
+.fk-f-rail{fill:var(--fk-rail)}.fk-s-rail{stroke:var(--fk-rail)}
+.fk-f-teal-strong{fill:var(--fk-teal-strong)}.fk-s-teal-strong{stroke:var(--fk-teal-strong)}
+@media (forced-colors:active){.fk text{fill:CanvasText}.fk rect,.fk circle{fill:Canvas;stroke:CanvasText}.fk path{stroke:CanvasText}.fk marker path{fill:CanvasText;stroke:none}}
+</style>
+<defs><marker id="board-trace-arrow-rail" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="fk-f-rail"/></marker></defs>
+<rect x="0.5" y="0.5" width="639" height="761" rx="16" class="fk-f-canvas fk-s-frame"/>
+<text x="32" y="54.8" font-size="26" font-weight="700" class="fk-f-ink">How a board is traced</text>
+<rect x="32" y="70.8" width="576" height="1" class="fk-f-hair"/>
+<path d="M320.5 180.8 L320.5 218.8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#board-trace-arrow-rail)" class="fk-s-rail"/>
+<path d="M320.5 295.8 L320 333.8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#board-trace-arrow-rail)" class="fk-s-rail"/>
+<path d="M320 448.8 L320.5 486.8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#board-trace-arrow-rail)" class="fk-s-rail"/>
+<path d="M320.5 582.8 L320.5 620.8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#board-trace-arrow-rail)" class="fk-s-rail"/>
+<rect x="225.5" y="88.8" width="190" height="88" rx="10" stroke-width="1" class="fk-f-card fk-s-line"/>
+<rect x="225.5" y="96.8" width="4" height="72" rx="2" class="fk-f-brand-strong"/>
+<rect x="225.5" y="222.8" width="190" height="69" rx="10" stroke-width="1" class="fk-f-card fk-s-line"/>
+<rect x="225.5" y="230.8" width="4" height="53" rx="2" class="fk-f-blue-strong"/>
+<rect x="181.5" y="337.8" width="277" height="107" rx="10" stroke-width="1" class="fk-f-card fk-s-line"/>
+<rect x="181.5" y="345.8" width="4" height="91" rx="2" class="fk-f-green-strong"/>
+<rect x="225.5" y="490.8" width="190" height="88" rx="10" stroke-width="1" class="fk-f-card fk-s-line"/>
+<rect x="225.5" y="498.8" width="4" height="72" rx="2" class="fk-f-teal-strong"/>
+<rect x="225.5" y="624.8" width="190" height="107" rx="10" stroke-width="1" class="fk-f-card fk-s-line"/>
+<rect x="225.5" y="632.8" width="4" height="91" rx="2" class="fk-f-brand-strong"/>
+<text x="245.5" y="115.5" font-size="15" font-weight="700" class="fk-f-ink">Need</text>
+<text x="245.5" y="140.4" font-size="13" class="fk-f-ink2">what a user or</text>
+<text x="245.5" y="159.2" font-size="13" class="fk-f-ink2">integrator wants</text>
+<text x="245.5" y="249.6" font-size="15" font-weight="700" class="fk-f-ink">Requirements</text>
+<text x="245.5" y="274.4" font-size="13" class="fk-f-ink2">testable, versioned</text>
+<text x="201.5" y="364.6" font-size="15" font-weight="700" class="fk-f-ink">Hardware, firmware, enclosure</text>
+<text x="201.5" y="389.4" font-size="13" class="fk-f-ink2">KiCad and reviewed parts</text>
+<text x="201.5" y="408.3" font-size="13" class="fk-f-ink2">the chip drivers</text>
+<text x="201.5" y="427.1" font-size="13" class="fk-f-ink2">the mechanical design</text>
+<text x="245.5" y="517.5" font-size="15" font-weight="700" class="fk-f-ink">Verification</text>
+<text x="245.5" y="542.4" font-size="13" class="fk-f-ink2">procedures, results,</text>
+<text x="245.5" y="561.2" font-size="13" class="fk-f-ink2">evidence</text>
+<text x="245.5" y="651.5" font-size="15" font-weight="700" class="fk-f-ink">Release</text>
+<text x="245.5" y="676.4" font-size="13" class="fk-f-ink2">signed tag, evidence</text>
+<text x="245.5" y="695.2" font-size="13" class="fk-f-ink2">pack</text>
+<text x="245.5" y="714.1" font-size="13" class="fk-f-ink2">manufacturing package</text>
+</svg>

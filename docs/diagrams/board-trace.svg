@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="762" viewBox="0 0 640 762" role="img" aria-labelledby="board-trace-title board-trace-desc" font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+<title id="board-trace-title">How a board is traced</title>
+<desc id="board-trace-desc">Trace of a board from a need to a release: needs lead to requirements, requirements lead to the hardware, firmware and enclosure, those lead to verification, and verification leads to the release.</desc>
+<defs><marker id="board-trace-arrow-rail" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7C8798"/></marker></defs>
+<rect x="0.5" y="0.5" width="639" height="761" rx="16" fill="#FFFFFF" stroke="#E2E7EE"/>
+<text x="32" y="54.8" font-size="26" font-weight="700" fill="#0E1726">How a board is traced</text>
+<rect x="32" y="70.8" width="576" height="1" fill="#E2E7EE"/>
+<path d="M320.5 180.8 L320.5 218.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#board-trace-arrow-rail)"/>
+<path d="M320.5 295.8 L320 333.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#board-trace-arrow-rail)"/>
+<path d="M320 448.8 L320.5 486.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#board-trace-arrow-rail)"/>
+<path d="M320.5 582.8 L320.5 620.8" fill="none" stroke="#7C8798" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#board-trace-arrow-rail)"/>
+<rect x="225.5" y="88.8" width="190" height="88" rx="10" fill="#FFFFFF" stroke="#738093" stroke-width="1"/>
+<rect x="225.5" y="96.8" width="4" height="72" rx="2" fill="#9A4A17"/>
+<rect x="225.5" y="222.8" width="190" height="69" rx="10" fill="#FFFFFF" stroke="#738093" stroke-width="1"/>
+<rect x="225.5" y="230.8" width="4" height="53" rx="2" fill="#2563EB"/>
+<rect x="181.5" y="337.8" width="277" height="107" rx="10" fill="#FFFFFF" stroke="#738093" stroke-width="1"/>
+<rect x="181.5" y="345.8" width="4" height="91" rx="2" fill="#15803D"/>
+<rect x="225.5" y="490.8" width="190" height="88" rx="10" fill="#FFFFFF" stroke="#738093" stroke-width="1"/>
+<rect x="225.5" y="498.8" width="4" height="72" rx="2" fill="#0B7A72"/>
+<rect x="225.5" y="624.8" width="190" height="107" rx="10" fill="#FFFFFF" stroke="#738093" stroke-width="1"/>
+<rect x="225.5" y="632.8" width="4" height="91" rx="2" fill="#9A4A17"/>
+<text x="245.5" y="115.5" font-size="15" font-weight="700" fill="#0E1726">Need</text>
+<text x="245.5" y="140.4" font-size="13" fill="#2B3442">what a user or</text>
+<text x="245.5" y="159.2" font-size="13" fill="#2B3442">integrator wants</text>
+<text x="245.5" y="249.6" font-size="15" font-weight="700" fill="#0E1726">Requirements</text>
+<text x="245.5" y="274.4" font-size="13" fill="#2B3442">testable, versioned</text>
+<text x="201.5" y="364.6" font-size="15" font-weight="700" fill="#0E1726">Hardware, firmware, enclosure</text>
+<text x="201.5" y="389.4" font-size="13" fill="#2B3442">KiCad and reviewed parts</text>
+<text x="201.5" y="408.3" font-size="13" fill="#2B3442">the chip drivers</text>
+<text x="201.5" y="427.1" font-size="13" fill="#2B3442">the mechanical design</text>
+<text x="245.5" y="517.5" font-size="15" font-weight="700" fill="#0E1726">Verification</text>
+<text x="245.5" y="542.4" font-size="13" fill="#2B3442">procedures, results,</text>
+<text x="245.5" y="561.2" font-size="13" fill="#2B3442">evidence</text>
+<text x="245.5" y="651.5" font-size="15" font-weight="700" fill="#0E1726">Release</text>
+<text x="245.5" y="676.4" font-size="13" fill="#2B3442">signed tag, evidence</text>
+<text x="245.5" y="695.2" font-size="13" fill="#2B3442">pack</text>
+<text x="245.5" y="714.1" font-size="13" fill="#2B3442">manufacturing package</text>
+</svg>

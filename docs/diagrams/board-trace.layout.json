@@ -1,0 +1,65 @@
+{
+ "direction": "TB",
+ "edges": [
+  {
+   "from": "need",
+   "to": "req",
+   "via": []
+  },
+  {
+   "from": "req",
+   "to": "des",
+   "via": []
+  },
+  {
+   "from": "des",
+   "to": "ver",
+   "via": []
+  },
+  {
+   "from": "ver",
+   "to": "rel",
+   "via": []
+  }
+ ],
+ "engine": "graphviz dot 13.1.0 (recorded for the reader; render never reads it)",
+ "figkit_layout": 1,
+ "id": "board-trace",
+ "input": "d1941e66bb17725c8e715d03864cfde05101945642b56dea3724ed44968a98f7",
+ "nodes": {
+  "des": [
+   0,
+   249,
+   277,
+   107
+  ],
+  "need": [
+   44,
+   0,
+   190,
+   88
+  ],
+  "rel": [
+   44,
+   536,
+   190,
+   107
+  ],
+  "req": [
+   44,
+   134,
+   190,
+   69
+  ],
+  "ver": [
+   44,
+   402,
+   190,
+   88
+  ]
+ },
+ "size": [
+  277,
+  643
+ ]
+}
