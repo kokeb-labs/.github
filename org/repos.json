@@ -113,20 +113,25 @@
         },
         "kb-core": {
           "kind": "library",
-          "description": "Kokeb Labs core library: MISRA-aware C++20 utilities, RTOS wrappers, interface concepts and device handlers, with chip drivers pinned as release tags.",
+          "description": "C++20 firmware core built to MISRA C++:2023 and IEC 62304 Class C: utilities, FreeRTOS/ThreadX wrappers, bus and DMA interfaces and device handlers, with chip drivers pinned as release tags.",
           "topics": [
             "kokeb-labs",
             "embedded",
+            "firmware",
             "cpp20",
             "misra-cpp",
+            "iec-62304",
             "rtos",
+            "freertos",
+            "threadx",
             "hal",
+            "dma",
             "esp32",
-            "firmware"
+            "stm32"
           ],
-          "homepage": "",
+          "homepage": "https://kokeb-labs.github.io/kb-core/",
           "required_checks": [
-            "gate"
+            "CI gate / gate"
           ]
         },
         "driver-factory": {
