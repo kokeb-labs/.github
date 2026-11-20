@@ -1,0 +1,31 @@
+---
+# Model of the figure 'board-trace'. Edit this file; `kokeb-docs figures` draws it. Never edit the SVGs.
+kind: graph
+id: board-trace
+title: How a board is traced
+alt: >-
+  Trace of a board from a need to a release: needs lead to requirements, requirements lead to the hardware, firmware
+  and enclosure, those lead to verification, and verification leads to the release.
+reads: >-
+  Five boxes in a column. Need is what a user or integrator wants. Requirements are testable and versioned. Design is
+  the hardware in KiCad with circuit blocks and reviewed parts, the firmware made of the chip drivers, and the
+  enclosure. Verification is procedures, results and evidence. Release is a signed tag, an evidence pack and a
+  manufacturing package. Each box leads to the next.
+direction: TB
+print: landscape
+sources:
+  - docs/model/board-trace.graph.yml
+nodes:
+  - {id: need, label: Need, tone: brand, lines: ["what a user or integrator wants"]}
+  - {id: req, label: Requirements, tone: blue, lines: ["testable, versioned"]}
+  - id: des
+    label: "Hardware, firmware, enclosure"
+    tone: green
+    lines: ["KiCad and reviewed parts", "the chip drivers", "the mechanical design"]
+  - {id: ver, label: Verification, tone: teal, lines: ["procedures, results, evidence"]}
+  - {id: rel, label: Release, tone: brand, lines: ["signed tag, evidence pack", "manufacturing package"]}
+edges:
+  - {from: need, to: req}
+  - {from: req, to: des}
+  - {from: des, to: ver}
+  - {from: ver, to: rel}

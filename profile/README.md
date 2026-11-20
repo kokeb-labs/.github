@@ -70,17 +70,12 @@ Read the details on [How we build](https://kokeb-labs.github.io/principles/) and
 
 Each board is traced from what people need down to the part on the board and its test results:
 
-```mermaid
-flowchart TD
-  need["Need<br/>what a user or integrator wants"] --> req["Requirements<br/>testable, versioned"]
-  req --> hw["Hardware<br/>KiCad, circuit blocks, reviewed parts"]
-  req --> fw["Firmware<br/>the chip drivers"]
-  req --> mech["Enclosure"]
-  hw --> ver["Verification<br/>procedures, results, evidence"]
-  fw --> ver
-  mech --> ver
-  ver --> rel["Release<br/>signed tag, evidence pack, manufacturing package"]
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kokeb-labs/.github/main/docs/diagrams/board-trace.dark.svg">
+  <img src="https://raw.githubusercontent.com/kokeb-labs/.github/main/docs/diagrams/board-trace.svg"
+    alt="Trace of a board from a need to a release: needs lead to requirements, requirements lead to the
+    hardware, firmware and enclosure, those lead to verification, and verification leads to the release.">
+</picture>
 
 Requirements, risks and verifications are data linked by version. Change a need or a chip choice and every
 requirement and test that depends on it is flagged in the same pull request. The format and the check live in

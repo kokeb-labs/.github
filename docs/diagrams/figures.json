@@ -1,0 +1,19 @@
+{
+  "board-trace": {
+    "title": "How a board is traced",
+    "alt": "Trace of a board from a need to a release: needs lead to requirements, requirements lead to the hardware, firmware and enclosure, those lead to verification, and verification leads to the release.",
+    "description": "Five boxes in a column. Need is what a user or integrator wants. Requirements are testable and versioned. Design is the hardware in KiCad with circuit blocks and reviewed parts, the firmware made of the chip drivers, and the enclosure. Verification is procedures, results and evidence. Release is a signed tag, an evidence pack and a manufacturing package. Each box leads to the next.",
+    "profile": "detail",
+    "width": 640,
+    "source": "docs/model/board-trace.graph.yml",
+    "sources": [
+      "docs/model/board-trace.graph.yml"
+    ],
+    "kind": "graph",
+    "palette": 2,
+    "print": "landscape",
+    "adaptive": true,
+    "twin": false,
+    "font": ""
+  }
+}
