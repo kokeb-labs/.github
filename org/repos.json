@@ -645,6 +645,24 @@
           ],
           "homepage": "",
           "required_checks": []
+        },
+        "driver-tmp117": {
+          "kind": "driver",
+          "description": "C++20 driver for the Texas Instruments TMP117 high-accuracy digital temperature sensor (I2C) with alert output and EEPROM",
+          "topics": [
+            "kokeb-labs",
+            "driver",
+            "embedded",
+            "cpp20",
+            "misra-cpp",
+            "header-only",
+            "i2c",
+            "temperature-sensor",
+            "texas-instruments",
+            "tmp117",
+            "kb-driver"
+          ],
+          "homepage": ""
         }
       }
     },
